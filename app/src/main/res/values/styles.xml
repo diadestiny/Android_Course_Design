@@ -6,5 +6,18 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+    <style name="BlueButton">
+        <item name="colorButtonNormal">#63aeff</item>
+    </style>
+    <style name="WhiteBox">
+        <item name="colorControlNormal">@color/cardview_light_background</item>
+        <item name="colorControlActivated">@color/cardview_dark_background</item>
+    </style>
+
+    <style name="PrimaryFlatButton" parent="Theme.AppCompat">
+        <item name="android:buttonStyle">@style/Widget.AppCompat.Button.Borderless.Colored</item>
+        <item name="colorControlHighlight">@color/colorAccent</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
 
 </resources>
