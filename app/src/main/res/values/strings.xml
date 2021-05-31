@@ -1,3 +1,52 @@
 <resources>
     <string name="app_name">ShareApp</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="sections">
+        <item>@string/section_live</item>
+        <item>@string/section_recommend</item>
+        <item>@string/section_bangumi</item>
+        <item>@string/section_more</item>
+        <item>@string/section_focus</item>
+        <item>@string/section_discover</item>
+    </string-array>
+
+    <!--悦享-->
+    <string name="home_tab_more">更多</string>
+    <string name="section_recommend">推荐</string>
+    <string name="section_live">直播</string>
+    <string name="section_focus">关注</string>
+    <string name="section_more">分区</string>
+    <string name="section_bangumi">番剧</string>
+    <string name="section_discover">发现</string>
+    <string name="level_text">LV2</string>
+    <string name="vip_message_1">您还不是</string>
+    <string name="vip">大会员</string>
+    <string name="vip_message_2">哦</string>
+    <string name="vip_message_3">黑科技在召唤</string>
+    <string name="immediately_opened">立即开通</string>
+    <string name="lock">锁屏</string>
+    <string name="quality_medium">清晰</string>
+    <string name="quality_smooth">流畅</string>
+    <string name="quality_super">超清</string>
+    <string name="about_app_net">© 2021-2025 Netopen.com</string>
+    <string name="all_rights_reserved">All rights reserved</string>
+    <string name="about_open_source">向开源致敬</string>
+    <string name="about_network_diagnosis">网络诊断</string>
+    <string name="about_share">分享</string>
+    <string name="about_feedback">意见反馈</string>
+    <string name="hot_recommend">热门推荐</string>
+    <string name="goin_and_see">进去看看</string>
+    <string name="all_dynamic">全区动态</string>
+    <string name="new_videos">最新视频</string>
+    <string name="hot_videos">最热视频</string>
+    <string name="news_videos">最新视频</string>
+    <string name="github_url">https://github.com/HotBitmapGG/bilibili-android-client</string>
+    <string name="share_title">分享哔哩哔哩App</string>
+    <string name="feedback_titlle">意见反馈</string>
+    <string name="feedback_message">如果您有任何意见或者发现了Bug，可以在GitHub上给我提Issuse，我会第一时间关注并解决，谢谢。</string>
+    <string name="load_more_no_text">╮(╯3╰)╭ 没有更多数据了</string>
+    <string name="about_tag">标签相关</string>
+    <string name="tag_edit">编辑</string>
 </resources>
