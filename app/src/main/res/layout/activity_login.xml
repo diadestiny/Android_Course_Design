@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
+    android:background="#cce5ff">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="50dp"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp">
+
+        <!--  Email Label -->
+
+        <ImageView
+            android:layout_width="235dp"
+            android:layout_height="127dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="0dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/logo" />
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:textColorHint="@color/bg_black"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            >
+            <EditText android:id="@+id/input_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:drawableStart="@mipmap/account"
+                android:hint="帐号"
+                android:textColor="@color/bg_black" />
+        </android.support.design.widget.TextInputLayout>
+
+        <!--  Password Label -->
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:textColorHint="@color/bg_black"
+            app:passwordToggleEnabled="true"
+            app:errorEnabled="true" >
+
+            <EditText
+                android:id="@+id/input_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@mipmap/lock"
+                android:hint="密码"
+                android:inputType="textPassword"
+                android:textColor="@color/bg_black" />
+
+
+        </android.support.design.widget.TextInputLayout>
+
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:orientation="horizontal">
+            <CheckBox
+                android:id="@+id/checkbox"
+                android:gravity="center"
+                android:layout_toLeftOf="@+id/keeppaw"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:theme="@style/WhiteBox" />
+
+            <TextView
+                android:gravity="center"
+                android:id="@+id/keeppaw"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="记住密码"
+                android:textSize="16sp"
+                android:textColor="@color/text_gray" />
+        </RelativeLayout>
+
+        <com.gc.materialdesign.views.ButtonRectangle
+            android:id="@+id/login_btn"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:padding="12dp"
+            android:text="登录"
+            android:background="#99cbff" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="33dp"
+            android:layout_marginTop="25dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="忘记密码?"
+                android:textColor="#00aaff"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/newuser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="新用户注册"
+                android:textColor="#00aaff"
+                android:textSize="16sp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="114dp"
+        android:text="登录即代表阅读并同意条款"
+        android:textColor="#00aaff"
+        android:layout_centerHorizontal="true"
+        android:textSize="15sp" />
+
+</RelativeLayout>
