@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fitsSystemWindows="true"
-    android:background="#cce5ff">
+    android:background="@color/myColorAccent">
 
     <LinearLayout
         android:orientation="vertical"
@@ -32,12 +32,12 @@
             android:focusable="true"
             android:focusableInTouchMode="true"
             >
-            <EditText android:id="@+id/input_email"
+            <EditText android:id="@+id/input_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
                 android:drawableStart="@mipmap/account"
-                android:hint="帐号"
+                android:hint="用户名"
                 android:textColor="@color/bg_black" />
         </android.support.design.widget.TextInputLayout>
 
