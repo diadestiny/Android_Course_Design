@@ -8,12 +8,21 @@ public class SimpleRespose {
      */
 
     private int code;
-    private String massage;
+    private String message;
+    private String data;
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
 
     /*
-    200: 成功
-    400： 失败
-     */
+        200: 成功
+        400： 失败
+         */
     public int getCode() {
         return code;
     }
@@ -22,11 +31,11 @@ public class SimpleRespose {
         this.code = code;
     }
 
-    public String getMassage() {
-        return massage;
+    public String getMessage() {
+        return message;
     }
 
-    public void setMassage(String massage) {
-        this.massage = massage;
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

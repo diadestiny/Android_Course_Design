@@ -1,6 +1,5 @@
 package com.guet.shareapp;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -67,13 +66,13 @@ public class RegisterActivity extends AppCompatActivity {
                 try {
                     Response response = okHttpClient.newCall(request).execute();
                     SimpleRespose simpleRespose = new Gson().fromJson(response.body().string(), SimpleRespose.class);
-                    System.out.println(simpleRespose.getMassage());
+                    System.out.println(simpleRespose.getMessage());
                     if (simpleRespose.getCode() == 200){
                         // 注册成功
                         RegisterActivity.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(RegisterActivity.this, simpleRespose.getMassage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterActivity.this, simpleRespose.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
@@ -82,7 +81,7 @@ public class RegisterActivity extends AppCompatActivity {
                         RegisterActivity.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(RegisterActivity.this, simpleRespose.getMassage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterActivity.this, simpleRespose.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         });
                     }

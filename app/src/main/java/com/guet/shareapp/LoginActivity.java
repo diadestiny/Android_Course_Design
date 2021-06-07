@@ -22,7 +22,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 public class LoginActivity extends AppCompatActivity {
     // 首先需要创建一个OkHttpClient对象用于Http请求, 可以改成全局型
@@ -104,13 +103,13 @@ public class LoginActivity extends AppCompatActivity {
                 try {
                     Response response = okHttpClient.newCall(request).execute();
                     SimpleRespose simpleRespose = new Gson().fromJson(response.body().string(), SimpleRespose.class);
-                    System.out.println(simpleRespose.getMassage());
+                    System.out.println(simpleRespose.getMessage());
                     if (simpleRespose.getCode() == 200){
                         LoginActivity.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                                Toast.makeText(LoginActivity.this, simpleRespose.getMassage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, simpleRespose.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
@@ -118,7 +117,7 @@ public class LoginActivity extends AppCompatActivity {
                         LoginActivity.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(LoginActivity.this, simpleRespose.getMassage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, simpleRespose.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
