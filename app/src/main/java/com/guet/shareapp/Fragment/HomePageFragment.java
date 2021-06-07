@@ -14,42 +14,48 @@ import com.flyco.tablayout.SlidingTabLayout;
 import com.guet.shareapp.Adapter.HomePagerAdapter;
 import com.guet.shareapp.R;
 
-import butterknife.BindView;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 
 public class HomePageFragment extends Fragment {
-    @BindView(R.id.view_pager)
     ViewPager mViewPager;
-    @BindView(R.id.sliding_tabs)
     SlidingTabLayout mSlidingTab;
+    private List<Fragment> fragments = new ArrayList<>();
 
+    public HomePageFragment() { }
 
-    public HomePageFragment() {
-
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_home_page, container, false);
+        mViewPager = view.findViewById(R.id.view_pager);
+        mSlidingTab = view.findViewById(R.id.sliding_tabs);
+        return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        initViewPager();
+        fragments.add(new DiscoverFragment());
+        fragments.add(new MessageFragment());
+        initViewPager();
     }
 
-//    private void initViewPager() {
-//        HomePagerAdapter mHomeAdapter = new HomePagerAdapter(getChildFragmentManager(), getApplicationContext());
-//        mViewPager.setOffscreenPageLimit(5);
-//        mViewPager.setAdapter(mHomeAdapter);
-//        mSlidingTab.setViewPager(mViewPager);
-//        mViewPager.setCurrentItem(1);
-//    }
+    private void initViewPager() {
+        HomePagerAdapter mHomeAdapter = new HomePagerAdapter(getChildFragmentManager(),fragments);
+        mViewPager.setOffscreenPageLimit(5);
+        mViewPager.setAdapter(mHomeAdapter);
+        mSlidingTab.setViewPager(mViewPager);
+        mViewPager.setCurrentItem(1);
+    }
 
     public static HomePageFragment newInstance() {
         return new HomePageFragment();
     }
 
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_home_page, container, false);
-    }
+
 }
