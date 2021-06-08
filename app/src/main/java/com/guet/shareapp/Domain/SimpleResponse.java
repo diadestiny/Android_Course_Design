@@ -1,6 +1,6 @@
-package com.guet.shareapp.domain;
+package com.guet.shareapp.Domain;
 
-public class SimpleRespose {
+public class SimpleResponse {
 
     /**
      * code : 200

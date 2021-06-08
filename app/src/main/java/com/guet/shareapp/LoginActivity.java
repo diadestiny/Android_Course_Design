@@ -8,13 +8,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.gc.materialdesign.views.Button;
 import com.google.gson.Gson;
-import com.guet.shareapp.domain.SimpleRespose;
+import com.guet.shareapp.Domain.SimpleResponse;
 
 import java.io.IOException;
-
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
@@ -102,22 +100,22 @@ public class LoginActivity extends AppCompatActivity {
                         .post(requestBody).build();
                 try {
                     Response response = okHttpClient.newCall(request).execute();
-                    SimpleRespose simpleRespose = new Gson().fromJson(response.body().string(), SimpleRespose.class);
-                    System.out.println(simpleRespose.getMessage());
-                    if (simpleRespose.getCode() == 200){
+                    SimpleResponse simpleResponse = new Gson().fromJson(response.body().string(), SimpleResponse.class);
+                    System.out.println(simpleResponse.getMessage());
+                    if (simpleResponse.getCode() == 200){
                         LoginActivity.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                                Toast.makeText(LoginActivity.this, simpleRespose.getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, simpleResponse.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
-                    else if (simpleRespose.getCode() == 400){
+                    else if (simpleResponse.getCode() == 400){
                         LoginActivity.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(LoginActivity.this, simpleRespose.getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, simpleResponse.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
@@ -129,7 +127,5 @@ public class LoginActivity extends AppCompatActivity {
             }
         }).start();
     }
-
-
 
 }
