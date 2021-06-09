@@ -1,4 +1,4 @@
-package com.guet.shareapp.Domain;
+package com.guet.shareapp.domain;
 
 public class SimpleResponse {
 

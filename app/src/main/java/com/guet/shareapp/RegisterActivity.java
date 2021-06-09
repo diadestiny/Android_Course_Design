@@ -8,7 +8,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.guet.shareapp.Domain.SimpleResponse;
+import com.guet.shareapp.domain.SimpleResponse;
 
 import java.io.IOException;
 
