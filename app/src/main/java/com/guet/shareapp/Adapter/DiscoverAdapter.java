@@ -1,7 +1,6 @@
 package com.guet.shareapp.Adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,24 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-
 import com.bumptech.glide.Glide;
-import com.google.gson.Gson;
 import com.guet.shareapp.Entity.ImageEntity;
 import com.guet.shareapp.R;
-
-
-import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
 
 public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.ViewHolder>{
 
@@ -35,34 +20,6 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.ViewHo
     private Context context;
 //    BottomSheetDialog dialog;
 
-    static class ViewHolder extends RecyclerView.ViewHolder
-    {
-        View itemView;
-
-        ImageView squareDisplayImgView;
-        TextView squareImgNameTextView;
-        TextView  squareAuthorNameTextView;
-        ImageView squareAuthorProfileImgView;
-        TextView  squareStarNumTextView;
-        ImageView squareLikeImgView;
-        TextView  squareDownloadNumTextView;
-        ImageView squareDownloadImgView;
-//        ImageView squareCommentImgView;
-//        TextView  squareCommentNumTextView;
-//        ImageView squareMoreImgView;
-
-        public ViewHolder(View v)
-        {
-            super(v);
-            itemView = v;
-            squareDisplayImgView = v.findViewById(R.id.discover_img);
-            squareImgNameTextView = v.findViewById(R.id.tv_img_name);
-            squareAuthorNameTextView = v.findViewById(R.id.tv_author_name);
-            squareAuthorProfileImgView = v.findViewById(R.id.iv_author);
-            squareStarNumTextView = v.findViewById(R.id.tv_like_num);
-            squareLikeImgView = v.findViewById(R.id.iv_like);
-        }
-    }
 
     public DiscoverAdapter(Context context, List<ImageEntity>List)
     {
@@ -81,7 +38,7 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.ViewHo
 //                .load(entity.getDisplayImgUrl())
                 .error(R.drawable.ic_load)
                 .fitCenter()
-                .into(holder.squareDisplayImgView);
+                .into(holder.discoverDisplayImgView);
 
         //头像
         Glide.with(context)
@@ -90,21 +47,18 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.ViewHo
                 //太耗时
 //                .placeholder(R.drawable.defalut_profile)
                 .error(R.drawable.head)
-                .into(holder.squareAuthorProfileImgView);
-//        holder.squareImgNameTextView.setText(entity.getDisplayImgName());
-//        holder.squareAuthorNameTextView.setText(entity.getAuthorName());
-//        holder.squareStarNumTextView.setText(String.valueOf(entity.getStarNum()));
+                .into(holder.discoverAuthorProfileImgView);
+        holder.discoverImgNameTextView.setText(entity.getDisplayImgName());
+        holder.discoverAuthorNameTextView.setText(entity.getAuthorName());
+        holder.discoverStarNumTextView.setText(String.valueOf(entity.getStarNum()));
 
-        holder.squareImgNameTextView.setText("RRRR");
-        holder.squareAuthorNameTextView.setText("用户名");
-        holder.squareStarNumTextView.setText("点赞量");
         if (entity.isStared())  //已经点赞
         {
-            holder.squareLikeImgView.setImageResource(R.drawable.ic_unlike);
+            holder.discoverLikeImgView.setImageResource(R.drawable.ic_unlike);
         }
         else //未点赞
         {
-            holder.squareLikeImgView.setImageResource(R.drawable.ic_like);
+            holder.discoverLikeImgView.setImageResource(R.drawable.ic_like);
         }
 //        holder.squareDownloadNumTextView.setText(String.valueOf(entity.getDownloadNum()));
     }
@@ -247,7 +201,7 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.ViewHo
 //
 //        });
 
-        holder.squareAuthorProfileImgView.setOnClickListener(new View.OnClickListener()
+        holder.discoverAuthorProfileImgView.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
@@ -267,4 +221,34 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.ViewHo
     {
         return discoverList.size();
     }
+
+    static class ViewHolder extends RecyclerView.ViewHolder
+    {
+        View itemView;
+
+        ImageView discoverDisplayImgView;
+        TextView discoverImgNameTextView;
+        TextView discoverAuthorNameTextView;
+        ImageView discoverAuthorProfileImgView;
+        TextView discoverStarNumTextView;
+        ImageView discoverLikeImgView;
+        TextView  squareDownloadNumTextView;
+        ImageView squareDownloadImgView;
+//        ImageView squareCommentImgView;
+//        TextView  squareCommentNumTextView;
+//        ImageView squareMoreImgView;
+
+        public ViewHolder(View v)
+        {
+            super(v);
+            itemView = v;
+            discoverDisplayImgView = v.findViewById(R.id.discover_img);
+            discoverImgNameTextView = v.findViewById(R.id.tv_img_name);
+            discoverAuthorNameTextView = v.findViewById(R.id.tv_author_name);
+            discoverAuthorProfileImgView = v.findViewById(R.id.iv_author);
+            discoverStarNumTextView = v.findViewById(R.id.tv_like_num);
+            discoverLikeImgView = v.findViewById(R.id.iv_like);
+        }
+    }
+
 }

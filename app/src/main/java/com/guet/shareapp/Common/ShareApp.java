@@ -1,4 +1,4 @@
-package com.guet.shareapp;
+package com.guet.shareapp.Common;
 
 import android.app.Application;
 

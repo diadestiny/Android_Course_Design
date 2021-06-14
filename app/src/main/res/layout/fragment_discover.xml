@@ -1,12 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linear_parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+
+        <com.scwang.smart.refresh.layout.SmartRefreshLayout
+            android:id="@+id/refreshLayout_square"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srlHeaderHeight="40dp"
+            app:srlFooterHeight="32dp"
+            app:srlEnablePureScrollMode="false">
+
+        <com.scwang.smart.refresh.header.ClassicsHeader
+            app:srlDrawableMarginRight="-10dp"
+            android:id="@+id/square_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srlEnableLastTime="false"
+            app:srlFinishDuration="100"
+            app:srlTextPulling=""
+            app:srlTextLoading=""
+            app:srlTextRelease=""
+            app:srlTextFinish=""
+            app:srlTextFailed=""
+            app:srlTextUpdate=""
+            app:srlTextSecondary=""
+            app:srlTextRefreshing=""/>
 
 
         <android.support.v7.widget.RecyclerView
@@ -16,9 +43,38 @@
             android:overScrollMode="never"
             android:scrollbars="none" />
 
-<!--        <include layout="@layout/layout_loading" />-->
+        <com.scwang.smart.refresh.footer.ClassicsFooter
+            app:srlAccentColor="@android:color/white"
+            app:srlPrimaryColor="@color/blue"
+            android:id="@+id/square_footer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srlTextLoading="加载中..."
+            app:srlTextRefreshing="加载中..."
+            app:srlTextFinish=""
+            app:srlTextFailed=""
+            app:srlTextNothing=""
+            app:srlFinishDuration="10"
+            app:srlDrawableMarginRight="4dp"/>
 
-    </FrameLayout>
+        </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/float_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_add_24"
+                android:layout_marginBottom="50dp"
+                android:backgroundTint="@color/blue_dark"
+                android:tint="#FFFFFF"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="650dp"
+                android:layout_marginEnd="16dp"
+                />
+
+
+    </RelativeLayout>
 
 
 </LinearLayout>

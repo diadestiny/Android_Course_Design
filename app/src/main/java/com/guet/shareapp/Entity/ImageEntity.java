@@ -9,14 +9,18 @@ public class ImageEntity implements Serializable
     private String imgID;
     private String authorID;
     private String displayImgUrl;
+    @SerializedName("pic_name")
     private String displayImgName;
+    @SerializedName("pic_starSum")
     private int    starNum;
     private int    downloadNum;
+    @SerializedName("username")
     private String authorName;
     @SerializedName("authorAvatar")
     private String authorProfileImgUrl;
     @SerializedName("stared")
     private boolean isStared;
+    @SerializedName("pic_url")
     private String thumbnailUrl;
 
     public ImageEntity() {}
@@ -24,8 +28,7 @@ public class ImageEntity implements Serializable
     public ImageEntity(String imgID, String authorID, String displayImgUrl,
                        String displayImgName, int starNum, int downloadNum,
                        String authorName, String authorProfileImgUrl, boolean isStared,
-                       String thumbnailUrl)
-    {
+                       String thumbnailUrl){
         this.imgID = imgID;
         this.authorID = authorID;
         this.displayImgUrl = displayImgUrl;
@@ -70,7 +73,7 @@ public class ImageEntity implements Serializable
 
     public String getDisplayImgName()
     {
-        if (displayImgName.length() > 9)
+        if (displayImgName.length() > 20)
             return displayImgName.substring(0, 9) + "···";
         return displayImgName;
     }

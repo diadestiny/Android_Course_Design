@@ -1,6 +1,8 @@
 package com.guet.shareapp.domain;
 
-public class SimpleResponse {
+import java.io.Serializable;
+
+public class ResponseObject<T> implements Serializable {
 
     /**
      * code : 200
@@ -9,13 +11,13 @@ public class SimpleResponse {
 
     private int code;
     private String message;
-    private String data;
+    private T data;
 
-    public String getData() {
+    public T getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(T data) {
         this.data = data;
     }
 
@@ -37,5 +39,14 @@ public class SimpleResponse {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    @Override
+    public String toString() {
+        return "ResponeObject{" +
+                "code='" + code + '\'' +
+                ", message='" + message + '\'' +
+                ", data=" + data +
+                '}';
     }
 }

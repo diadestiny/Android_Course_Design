@@ -20,7 +20,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/linear1">
+        android:id="@+id/linear1"
+        android:layout_marginTop="5dp">
         <com.guet.shareapp.View.CircleImageView
             android:id="@+id/iv_author"
             android:layout_width="@dimen/circle_user_small_size"
@@ -39,6 +40,7 @@
             android:textColor="@color/black_80"
             android:textSize="20sp"
             android:text="diadestiny"
+            android:layout_gravity="center"
             android:layout_toRightOf="@+id/iv_author"/>
 
      </LinearLayout>
@@ -49,7 +51,7 @@
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:layout_below="@id/linear1"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="5dp"/>
 
         <TextView
             android:id="@+id/tv_img_name"
@@ -57,27 +59,27 @@
             android:layout_height="wrap_content"
             android:maxLines="1"
             android:textColor="@color/black_80"
-            android:textSize="22sp"
+            android:textSize="15sp"
             android:textStyle="bold"
             android:hint="图片名称"
-
+            android:layout_centerHorizontal="true"
             android:layout_below="@+id/discover_img"
             />
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <RelativeLayout
+            android:layout_width="180dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_img_name"
-            android:layout_marginTop="2dp">
+            android:layout_marginTop="8dp"
+            android:layout_alignParentRight="true">
 
             <ImageView
                 android:id="@+id/iv_like"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:src="@drawable/ic_like"
-                android:layout_marginLeft="30dp"/>
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/tv_like_num"
+                android:src="@drawable/ic_like" />
 
             <TextView
                 android:id="@+id/tv_like_num"
@@ -86,34 +88,41 @@
                 android:maxLength="9"
                 android:text="点赞量"
                 android:layout_gravity="center"
-                android:textSize="18sp" />
+                android:textSize="13sp"
+                android:layout_marginStart="3dp"
+                android:layout_toLeftOf="@id/tv_comment"
+                android:layout_centerInParent="true"
+                android:layout_marginEnd="25dp"/>
 
             <ImageView
                 android:id="@+id/iv_comment_img"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+
                 android:src="@drawable/ic_comment"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginLeft="50dp"
-                />
+                android:layout_centerInParent="true"
+                android:layout_toLeftOf="@+id/tv_comment"/>
 
             <TextView
-                android:id="@+id/iv_comment"
+                android:id="@+id/tv_comment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxLength="9"
                 android:text="评论"
-                android:textSize="18sp"
-                android:layout_gravity="center" />
+                android:textSize="13sp"
+                android:layout_toLeftOf="@id/tv_share"
+                android:layout_marginEnd="25dp"
+                android:layout_marginStart="3dp"
+                android:layout_centerInParent="true"
+                android:layout_centerHorizontal="true"/>
 
             <ImageView
-                android:layout_width="28dp"
-                android:layout_height="28dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:src="@drawable/ic_share"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginLeft="50dp" />
+                android:layout_centerInParent="true"
+                android:layout_toStartOf="@+id/tv_share"
+                android:layout_marginBottom="5dp"/>
 
             <TextView
                 android:id="@+id/tv_share"
@@ -121,10 +130,13 @@
                 android:layout_height="wrap_content"
                 android:maxLength="9"
                 android:text="转发"
-                android:textSize="18sp"
-                android:layout_gravity="center" />
+                android:textSize="13sp"
+                android:layout_gravity="center"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:layout_marginStart="3dp"/>
 
-        </LinearLayout>
+        </RelativeLayout>
 
 
     </RelativeLayout>

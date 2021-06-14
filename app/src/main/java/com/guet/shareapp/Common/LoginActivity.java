@@ -1,4 +1,4 @@
-package com.guet.shareapp;
+package com.guet.shareapp.Common;
 
 
 import android.content.Context;
@@ -6,16 +6,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.gc.materialdesign.views.Button;
 import com.google.gson.Gson;
-import com.guet.shareapp.domain.SimpleResponse;
+import com.guet.shareapp.R;
+import com.guet.shareapp.domain.ResponseObject;
 
 import java.io.IOException;
 import okhttp3.Call;
@@ -110,24 +109,24 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         .post(requestBody).build();
                 try {
                     Response response = okHttpClient.newCall(request).execute();
-                    SimpleResponse simpleResponse = new Gson().fromJson(response.body().string(), SimpleResponse.class);
-                    System.out.println(simpleResponse.getMessage());
-                    if (simpleResponse.getCode() == 200){
+                    ResponseObject responseObject = new Gson().fromJson(response.body().string(), ResponseObject.class);
+                    System.out.println(responseObject.getMessage());
+                    if (responseObject.getCode() == 200){
                         LoginActivity.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 user_name = username;
                                 keepData();
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                                Toast.makeText(LoginActivity.this, simpleResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, responseObject.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
-                    else if (simpleResponse.getCode() == 400){
+                    else if (responseObject.getCode() == 400){
                         LoginActivity.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(LoginActivity.this, simpleResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, responseObject.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         });
                     }

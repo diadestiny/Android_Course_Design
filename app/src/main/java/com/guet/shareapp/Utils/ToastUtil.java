@@ -1,11 +1,10 @@
 package com.guet.shareapp.Utils;
-
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.widget.Toast;
 
-import com.guet.shareapp.ShareApp;
+import com.guet.shareapp.Common.ShareApp;
 
 /**
  * Toast工具类

@@ -1,4 +1,4 @@
-package com.guet.shareapp;
+package com.guet.shareapp.Common;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,7 +8,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.guet.shareapp.domain.SimpleResponse;
+import com.guet.shareapp.R;
+import com.guet.shareapp.domain.ResponseObject;
 
 import java.io.IOException;
 
@@ -65,23 +66,23 @@ public class RegisterActivity extends AppCompatActivity {
                         .post(requestBody).build();
                 try {
                     Response response = okHttpClient.newCall(request).execute();
-                    SimpleResponse simpleResponse = new Gson().fromJson(response.body().string(), SimpleResponse.class);
-                    System.out.println(simpleResponse.getMessage());
-                    if (simpleResponse.getCode() == 200){
+                    ResponseObject responseObject = new Gson().fromJson(response.body().string(), ResponseObject.class);
+                    System.out.println(responseObject.getMessage());
+                    if (responseObject.getCode() == 200){
                         // 注册成功
                         RegisterActivity.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(RegisterActivity.this, simpleResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterActivity.this, responseObject.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
-                    else if (simpleResponse.getCode() == 400){
+                    else if (responseObject.getCode() == 400){
                         // 注册失败
                         RegisterActivity.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(RegisterActivity.this, simpleResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterActivity.this, responseObject.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         });
                     }

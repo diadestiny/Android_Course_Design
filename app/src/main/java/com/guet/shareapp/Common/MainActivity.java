@@ -1,4 +1,4 @@
-package com.guet.shareapp;
+package com.guet.shareapp.Common;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.guet.shareapp.Fragment.HomePageFragment;
+import com.guet.shareapp.R;
 import com.guet.shareapp.Utils.ToastUtil;
 import com.guet.shareapp.View.CircleImageView;
 
