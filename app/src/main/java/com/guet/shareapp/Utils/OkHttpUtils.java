@@ -102,19 +102,24 @@ public  class OkHttpUtils {
     }
 
     public static void postPictureWithFile(String url , Map<String, String> uploadInfo, FileProgressRequestBody.ProgressListener listener, Callback callback)throws IOException {
-        String pictureInfo = uploadInfo.get("pictureInfo");
-        String ablumId = uploadInfo.get("ablumId");
-        String pictureName = uploadInfo.get("pictureName");
-        String visiable = uploadInfo.get("publishVisiable");
-        String filePath = uploadInfo.get("filePath");
-        File file = new File(filePath);
-        FileProgressRequestBody fileProgressRequestBody = new FileProgressRequestBody(file, "application/form-data;charset=utf-8", listener);
+        String username = uploadInfo.get("username");
+        String intro = uploadInfo.get("intro");
+        String visible = uploadInfo.get("visible");
+        String albumName = uploadInfo.get("albumName");
+        String filename = uploadInfo.get("filename");
+        String filepath = uploadInfo.get("filepath");
+        File file = new File(filepath);
+//        Log.d("lkh", file.getName().substring(file.getName().lastIndexOf(".")));
+
+        FileProgressRequestBody fileProgressRequestBody = new FileProgressRequestBody(file, "image/"+file.getName().substring(file.getName().lastIndexOf(".")), listener);
+
         MultipartBody build = new MultipartBody.Builder().setType(MultipartBody.FORM)
-                .addFormDataPart("file", Uri.decode(pictureName+file.getName().substring(file.getName().lastIndexOf("."))), fileProgressRequestBody)
-                .addFormDataPart("pictureName", pictureName)
-                .addFormDataPart("publishVisiable", visiable)
-                .addFormDataPart("ablumId", ablumId)
-                .addFormDataPart("pictureInfo", pictureInfo)
+                .addFormDataPart("file", Uri.decode(filename+file.getName().substring(file.getName().lastIndexOf("."))), fileProgressRequestBody)
+                .addFormDataPart("username", username)
+                .addFormDataPart("intro", intro)
+                .addFormDataPart("visible", visible)
+                .addFormDataPart("albumName", albumName)
+                .addFormDataPart("filename", filename)
                 .build();
 
         Request.Builder builder = new Request.Builder();

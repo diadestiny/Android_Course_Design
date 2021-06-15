@@ -1,41 +1,81 @@
 package com.guet.shareapp.Common;
 
 import android.Manifest;
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gc.materialdesign.views.Button;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.guet.shareapp.Adapter.OnItemClickListener;
 import com.guet.shareapp.Adapter.PublishAdapter;
+import com.guet.shareapp.Entity.ImageEntity;
 import com.guet.shareapp.R;
+import com.guet.shareapp.Utils.FileProgressRequestBody;
+import com.guet.shareapp.Utils.OkHttpUtils;
 import com.guet.shareapp.Utils.ToastUtil;
+import com.guet.shareapp.domain.ResponseObject;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
 import com.zhihu.matisse.filter.Filter;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class PublishActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE_CHOOSE = 100;
-    int maxnum = 6;
+    int maxnum = 1;
     RecyclerView recyclerView;
     List<String> list = new ArrayList<>();
+    Spinner spinner;
+    EditText editPicName,editPicInfo;
+    CheckBox checkBox;
+    Button publish_btn;
+    TextView typeName;
+
     private PublishAdapter adapter;
 
     @Override
@@ -43,10 +83,127 @@ public class PublishActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publish);
         recyclerView = findViewById(R.id.mRecyclerview);
-        list.add("add");
+        spinner = findViewById(R.id.spin);
+        editPicName = findViewById(R.id.etpic);
+        editPicInfo = findViewById(R.id.etDescribe);
+        checkBox = findViewById(R.id.choose);
+        publish_btn = findViewById(R.id.publish);
+        typeName = findViewById(R.id.typeName);
+        publish_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    upload();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        setSpinner();
         initRecyclerview();
         initPermission();
     }
+
+    private void setSpinner() {
+        final String[] spinnerItems = {"风景","美食","人物","萌宠","其它"};
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, spinnerItems);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(spinnerAdapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                typeName.setText(spinnerItems[position]);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+
+    private void upload() throws IOException {
+        if (editPicName.getText().toString().equals("")){
+            ToastUtil.ShortToast("图片名称不能为空");
+        }else{
+
+            HashMap map=new HashMap<String,String>();
+            map.put("username", LoginActivity.user_name);
+
+            OkHttpUtils.post("picture/show_albums", map, new Callback()
+            {
+                @Override
+                public void onFailure(@NotNull Call call, @NotNull IOException e)
+                {
+
+                }
+                @Override
+                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException
+                {
+                    ResponseBody responseBody = response.body();
+                    assert responseBody != null;
+                    String json = responseBody.string();
+//                    Log.e("lkh", json);
+                    Type type = new TypeToken<ResponseObject<List<String>>>(){}.getType();
+                    ResponseObject<ArrayList<String>> responseObject = new Gson().fromJson(json, type);
+                    if (responseObject.getCode() == 200) {
+                        if(!responseObject.getData().contains(typeName.toString())){
+                            HashMap map2 = new HashMap<String,String>();
+                            map2.put("username",LoginActivity.user_name);
+                            map2.put("albumName",typeName.getText().toString());
+                            OkHttpUtils.post("picture/create_album", map2, new Callback() {
+                                @Override
+                                public void onFailure(Call call, IOException e) {
+                                    ToastUtil.ShortToast("相册创建失败");
+                                }
+
+                                @Override
+                                public void onResponse(Call call, Response response) throws IOException {
+
+                                }
+                            });
+                        }
+                    }
+
+                }
+            });
+
+            map.put("intro",editPicInfo.getText().toString());
+            if(checkBox.isChecked()){
+                map.put("visible","true");
+            }else{
+                map.put("visible","false");
+            }
+            map.put("albumName",typeName.getText().toString());
+            map.put("filename",editPicName.getText().toString());
+
+            map.put("filepath",list.get(0));
+//正式上传
+            OkHttpUtils.postPictureWithFile("picture/upload", map, listener, new Callback() {
+                @Override
+                public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                    ToastUtil.ShortToast("上传失败");
+                }
+
+                @Override
+                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                    Log.e("lkh",response.body().string());
+                    ResponseObject responeObject = new Gson().fromJson(response.body().string(), ResponseObject.class);
+                    if (responeObject.getCode() == 200){
+//                            finish();
+                            ToastUtil.ShortToast("上传成功");
+                    }else {
+                        Log.e("lkh", "失败");
+                        ToastUtil.ShortToast("上传失败");
+                    }
+
+                }
+            });
+
+        }
+    }
+
     private void initPermission() {
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(android.Manifest.permission.WRITE_EXTERNAL_STORAGE,android.Manifest.permission.READ_EXTERNAL_STORAGE);
@@ -56,19 +213,22 @@ public class PublishActivity extends AppCompatActivity {
     private void initRecyclerview() {
         recyclerView.setLayoutManager(new GridLayoutManager(this,3));
         adapter = new PublishAdapter(this,list);
-        adapter.setOnItemClickListener(new OnItemClickListener() {
+        adapter.setOnItemClickListener1(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                if(position == list.size()-1){
                     if(list.size()>maxnum){
                         ToastUtil.ShortToast("当前选择图片数量达到上限");
                     }else{
                         selectPhoto(maxnum-position-1);
+                        adapter.notifyDataSetChanged();
                     }
-                }else{
-                    list.remove(position);
-                    adapter.notifyDataSetChanged();
-                }
+            }
+        });
+        adapter.setOnItemClickListener2(new OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                list.remove(position);
+                adapter.notifyDataSetChanged();
             }
         });
         recyclerView.setAdapter(adapter);
@@ -90,14 +250,8 @@ public class PublishActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_CHOOSE && resultCode == RESULT_OK) {
             for(Uri u:Matisse.obtainResult(data)){
-               // if(list.size()>=2){
-                  list.add(list.size()-1,u.toString());
-              //  }else{
-                //    list.add(0,u.toString());
-               // }
-
+                  list.add(getRealFilePath(this,u));
             }
-//            Log.d("lkh",Matisse.obtainResult(data).get(0).toString());
             adapter.notifyDataSetChanged();
         }
     }
@@ -117,6 +271,57 @@ public class PublishActivity extends AppCompatActivity {
         }
     }
 
+    private FileProgressRequestBody.ProgressListener listener= v->{
+        int i = (int) (v * 100);
+        if (i == 100){
+//            ToastUtil.ShortToast("上传成功");
+        }
+    };
+    /**
+     *  根据Uri获取文件真实地址
+     */
+    public static String getRealFilePath(Context context, Uri uri) {
+        if (null == uri) return null;
+        final String scheme = uri.getScheme();
+        String realPath = null;
+        if (scheme == null)
+            realPath = uri.getPath();
+        else if (ContentResolver.SCHEME_FILE.equals(scheme)) {
+            realPath = uri.getPath();
+        } else if (ContentResolver.SCHEME_CONTENT.equals(scheme)) {
+            Cursor cursor = context.getContentResolver().query(uri,
+                    new String[]{MediaStore.Images.ImageColumns.DATA},
+                    null, null, null);
+            if (null != cursor) {
+                if (cursor.moveToFirst()) {
+                    int index = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+                    if (index > -1) {
+                        realPath = cursor.getString(index);
+                    }
+                }
+                cursor.close();
+            }
+        }
+        if (TextUtils.isEmpty(realPath)) {
+            if (uri != null) {
+                String uriString = uri.toString();
+                int index = uriString.lastIndexOf("/");
+                String imageName = uriString.substring(index);
+                File storageDir;
 
+                storageDir = Environment.getExternalStoragePublicDirectory(
+                        Environment.DIRECTORY_PICTURES);
+                File file = new File(storageDir, imageName);
+                if (file.exists()) {
+                    realPath = file.getAbsolutePath();
+                } else {
+                    storageDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+                    File file1 = new File(storageDir, imageName);
+                    realPath = file1.getAbsolutePath();
+                }
+            }
+        }
+        return realPath;
+    }
 
 }

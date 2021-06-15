@@ -119,7 +119,7 @@ public class DiscoverFragment extends Fragment {
                 ResponseBody responseBody = response.body();
                 assert responseBody != null;
                 String json = responseBody.string();
-                Log.e("json", json);
+                //Log.e("json", json);
                 if(json.contains("<title>404 Not Found</title>")){
                     ToastUtil.ShortToast("已经加载完毕");
                 }else{
@@ -143,5 +143,7 @@ public class DiscoverFragment extends Fragment {
         adapter = new DiscoverAdapter(getContext(), discoverList);
         recyclerView.setAdapter(adapter);
     }
+
+
 
 }

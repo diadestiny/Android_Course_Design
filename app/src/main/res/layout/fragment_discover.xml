@@ -69,8 +69,8 @@
                 android:tint="#FFFFFF"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginTop="650dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginTop="500dp"
+                android:layout_marginEnd="50dp"
                 />
 
 

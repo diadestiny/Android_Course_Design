@@ -73,7 +73,8 @@
         android:layout_below="@+id/scroll"
         />
 
-    <com.gc.materialdesign.views.CheckBox
+    <android.support.v7.widget.AppCompatCheckBox
+        android:id="@+id/choose"
         android:layout_width="31dp"
         android:layout_height="29dp"
         android:layout_below="@+id/scroll"
@@ -81,10 +82,44 @@
         android:layout_toRightOf="@+id/text" />
 
     <com.gc.materialdesign.views.ButtonRectangle
+        android:id="@+id/publish"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/scroll"
         android:layout_centerHorizontal="true"
         android:text="发布"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/scroll"
+        android:layout_marginTop="28dp"
+        android:layout_marginRight="38dp"
+        android:layout_toLeftOf="@+id/spin"
+        android:text="图片类型:"
+        android:textColor="@color/black_80"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/typeName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/scroll"
+        android:layout_marginTop="29dp"
+        android:layout_marginRight="5dp"
+        android:layout_toLeftOf="@+id/spin"
+        android:text="风景"
+        android:textColor="@color/black_80"
+        android:textSize="15sp" />
+
+    <Spinner
+        android:id="@+id/spin"
+        android:layout_width="30dp"
+        android:layout_height="29dp"
+        android:layout_below="@+id/scroll"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="27dp"
+        android:layout_marginRight="7dp" />
 
 </RelativeLayout>

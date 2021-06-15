@@ -49,6 +49,7 @@ public class HomePageFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         fragments.add(new DiscoverFragment());
         fragments.add(new MessageFragment());
+        fragments.add(new TypeFragment());
         initViewPager();
         user_name.setText(LoginActivity.user_name);
         navigation_layout.setOnClickListener(new View.OnClickListener() {
