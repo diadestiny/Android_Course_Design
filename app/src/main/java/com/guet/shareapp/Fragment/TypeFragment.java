@@ -2,8 +2,6 @@ package com.guet.shareapp.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,13 +12,10 @@ import android.view.ViewGroup;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.guet.shareapp.Adapter.DiscoverAdapter;
-import com.guet.shareapp.Adapter.OnItemClickListener;
-import com.guet.shareapp.Adapter.PublishAdapter;
+import com.guet.shareapp.Interface.OnItemClickListener;
 import com.guet.shareapp.Adapter.TypeAdapter;
-import com.guet.shareapp.Common.AlbumDetailActivity;
+import com.guet.shareapp.Common.AlbumActivity;
 import com.guet.shareapp.Common.LoginActivity;
-import com.guet.shareapp.Entity.ImageEntity;
 import com.guet.shareapp.R;
 import com.guet.shareapp.Utils.OkHttpUtils;
 import com.guet.shareapp.Utils.ToastUtil;
@@ -94,7 +89,7 @@ public class TypeFragment extends Fragment {
                 if (responseObject.getCode() == 200 ) {
                     album_picture_ids.clear();
                     album_picture_ids.addAll(responseObject.getData());
-                    Intent intent = new Intent(getContext(), AlbumDetailActivity.class);
+                    Intent intent = new Intent(getContext(), AlbumActivity.class);
                     startActivity(intent);
                 }
             }

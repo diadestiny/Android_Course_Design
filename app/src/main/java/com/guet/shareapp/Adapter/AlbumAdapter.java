@@ -3,36 +3,33 @@ package com.guet.shareapp.Adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.guet.shareapp.Entity.AlbumEntity;
+import com.guet.shareapp.Interface.OnItemLongListener;
 import com.guet.shareapp.R;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class Album_detail_Adapter extends RecyclerView.Adapter<Album_detail_Adapter.Album_ViewHolder> {
+public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.Album_ViewHolder> {
     Context context;
-//    OnItemClickListener onItemClickListener;
+    OnItemLongListener onItemLongListener;
     private List<String> list; // Uri地址
     HashMap<String, Integer> mp = new HashMap<>();
 
-    public Album_detail_Adapter(Context context,List<String> list)
+    public AlbumAdapter(Context context, List<String> list)
     {
         this.context = context;
         this.list = list;
     }
 
-//    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
-//        this.onItemClickListener = onItemClickListener;
-//    }
+    public void setOnItemLongListener(OnItemLongListener onItemLongListener) {
+        this.onItemLongListener = onItemLongListener;
+    }
 
     public void setList(List<String> list) {
         this.list = list;
@@ -40,19 +37,27 @@ public class Album_detail_Adapter extends RecyclerView.Adapter<Album_detail_Adap
 
     @NonNull
     @Override
-    public Album_detail_Adapter.Album_ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
+    public AlbumAdapter.Album_ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_album, parent, false);
-        final Album_detail_Adapter.Album_ViewHolder holder = new Album_detail_Adapter.Album_ViewHolder(view);
+        final AlbumAdapter.Album_ViewHolder holder = new AlbumAdapter.Album_ViewHolder(view);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Album_detail_Adapter.Album_ViewHolder itemViewHolder, int i) {
+    public void onBindViewHolder(@NonNull AlbumAdapter.Album_ViewHolder itemViewHolder, int i) {
         Glide.with(context)
                 .load(list.get(i))
                 .error(R.drawable.ic_load)
                 .fitCenter()
                 .into(itemViewHolder.mItemIcon);
+        itemViewHolder.mItemIcon.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                int pos = itemViewHolder.getLayoutPosition();
+                onItemLongListener.onItemLongClick(itemViewHolder.itemView,pos);
+                return true;
+            }
+        });
     }
 
     @Override

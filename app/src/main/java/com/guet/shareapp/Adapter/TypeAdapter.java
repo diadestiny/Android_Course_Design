@@ -3,34 +3,18 @@ package com.guet.shareapp.Adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.guet.shareapp.Common.LoginActivity;
-import com.guet.shareapp.Entity.ImageEntity;
+import com.guet.shareapp.Interface.OnItemClickListener;
 import com.guet.shareapp.R;
-import com.guet.shareapp.Utils.OkHttpUtils;
-import com.guet.shareapp.domain.ResponseObject;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 
 /**

@@ -17,7 +17,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppBaseTheme">
-        <activity android:name=".Common.AlbumDetailActivity"></activity>
+        <activity android:name=".Common.AlbumActivity"></activity>
         <activity android:name=".Common.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
