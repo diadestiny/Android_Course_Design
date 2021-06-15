@@ -175,7 +175,6 @@ public class DiscoverFragment extends Fragment {
                 }
             }
         });
-
     }
     private void initData() throws IOException {
         discoverList = new ArrayList<>();

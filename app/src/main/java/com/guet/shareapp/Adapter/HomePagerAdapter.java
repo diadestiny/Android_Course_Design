@@ -13,7 +13,7 @@ import java.util.List;
 
 public class HomePagerAdapter extends FragmentPagerAdapter {
 
-    private final String[] TITLES = {"发现","消息","我的"};
+    private final String[] TITLES = {"发现","我的","消息"};
     private List<Fragment> fragments ;
     public HomePagerAdapter(FragmentManager fm,List<Fragment> list) {
         super(fm);

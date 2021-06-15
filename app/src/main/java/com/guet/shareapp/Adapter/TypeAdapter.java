@@ -3,18 +3,34 @@ package com.guet.shareapp.Adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.guet.shareapp.Common.LoginActivity;
 import com.guet.shareapp.Entity.ImageEntity;
 import com.guet.shareapp.R;
+import com.guet.shareapp.Utils.OkHttpUtils;
+import com.guet.shareapp.domain.ResponseObject;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 
 /**
@@ -26,9 +42,9 @@ import java.util.List;
 
 public class TypeAdapter extends RecyclerView.Adapter<TypeAdapter.Type_ViewHolder> {
     Context context;
-
+    OnItemClickListener onItemClickListener;
     private List<String> list = new ArrayList<>();
-
+    HashMap<String, Integer> mp = new HashMap<>();
     private int[] itemIcons = new int[]{
             R.drawable.ic_category_live, R.drawable.ic_category_t13,
             R.drawable.ic_category_t1, R.drawable.ic_category_t3,
@@ -39,22 +55,34 @@ public class TypeAdapter extends RecyclerView.Adapter<TypeAdapter.Type_ViewHolde
             R.drawable.ic_category_t23, R.drawable.ic_category_t11,
             R.drawable.ic_category_game_center
     };
-    public TypeAdapter(Context context)
+    public TypeAdapter(Context context,List<String> list)
     {
         this.context = context;
-        list.add("风景");
-        list.add("美食");
-        list.add("人物");
-        list.add("萌宠");
-        list.add("动漫");
-        list.add("图案");
-        list.add("其它");
+        this.list = list;
+//        mp.put("风景",R.drawable.ic_category_t59);
+//        mp.put("美食",R.drawable.ic_category_t59);
+//        list.add("风景");
+//        list.add("美食");
+//        list.add("人物");
+//        list.add("萌宠");
+//        list.add("动漫");
+//        list.add("图案");
+//        list.add("其它");
         //"番剧", "动画",
         // "音乐", "舞蹈", "游戏",
         //  "科技", "生活", "鬼畜",
         //   "时尚", "广告", "娱乐",
         //  "电影", "电视剧", "游戏中心"
         //"风景","美食","人物","萌宠","其它"
+
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
+    public void setList(List<String> list) {
+        this.list = list;
     }
 
     @NonNull
@@ -69,6 +97,13 @@ public class TypeAdapter extends RecyclerView.Adapter<TypeAdapter.Type_ViewHolde
     public void onBindViewHolder(@NonNull Type_ViewHolder itemViewHolder, int i) {
             itemViewHolder.mItemIcon.setImageResource(itemIcons[i]);
             itemViewHolder.mItemText.setText(list.get(i));
+            itemViewHolder.mItemIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int pos = itemViewHolder.getLayoutPosition();
+                onItemClickListener.onItemClick(itemViewHolder.itemView,pos);
+            }
+        });
 
     }
 
@@ -92,8 +127,9 @@ public class TypeAdapter extends RecyclerView.Adapter<TypeAdapter.Type_ViewHolde
             itemView = v;
             mItemIcon = v.findViewById(R.id.item_icon);
             mItemText = v.findViewById(R.id.item_title);
-
         }
     }
+
+
 
 }

@@ -127,7 +127,7 @@ public class PublishActivity extends AppCompatActivity {
                     ResponseObject<ArrayList<String>> responseObject = new Gson().fromJson(json, type);
                     if (responseObject.getCode() == 200) {
                         albumNames = responseObject.getData();
-                        Log.d("lkh",albumNames.toString());
+//                        Log.d("lkh",albumNames.toString());
                     }
 
                 }
@@ -192,8 +192,8 @@ public class PublishActivity extends AppCompatActivity {
                     if(json.contains("413 Request Entity")){
                         ToastUtil.ShortToast("图片过大，无法上传");
                     }else{
-                        ResponseObject responseObject = new Gson().fromJson(json, ResponseObject.class);
-                        if (responseObject.getCode() == 200){
+                        ResponseObject responeObject = new Gson().fromJson(json, ResponseObject.class);
+                        if (responeObject.getCode() == 200){
                             Log.e("lkh","成功");
                             ToastUtil.ShortToast("上传成功");
                         }else {

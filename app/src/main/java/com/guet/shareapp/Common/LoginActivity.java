@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -13,10 +14,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.gc.materialdesign.views.Button;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.guet.shareapp.R;
+import com.guet.shareapp.Utils.OkHttpUtils;
+import com.guet.shareapp.Utils.ToastUtil;
 import com.guet.shareapp.domain.ResponseObject;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
@@ -24,12 +35,13 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     // 首先需要创建一个OkHttpClient对象用于Http请求, 可以改成全局型
-    private OkHttpClient okHttpClient = new OkHttpClient();
-    private OkHttpClient client = okHttpClient.newBuilder().build();
-    String BaseUrl = "https://www.2020agc.site";
+    public OkHttpClient okHttpClient = new OkHttpClient();
+    public OkHttpClient client = okHttpClient.newBuilder().build();
+    public String BaseUrl = "https://www.2020agc.site";
     public static String user_name = "";
     private EditText username;
     private EditText password;
@@ -37,13 +49,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private TextView registerView;
     private CheckBox checkBox;
     private SharedPreferences sharedPreferences=null;
+    public static List<String> album_names = new ArrayList<>();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        GetDemo();
         loginBtn = findViewById(R.id.login_btn);
         registerView = findViewById(R.id.newuser);
         username = findViewById(R.id.input_name);
@@ -67,32 +79,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
-    private void GetDemo() {
-        // get请求
-        // 创建一个request对象
-        Request request = new Request.Builder().url(BaseUrl).build();
-        // 执行和回调
-        client.newCall(request).enqueue(new Callback() {
-            public void onFailure(Call call, IOException e) {
-                // 请求失败
 
-            }
-            public void onResponse(Call call, Response response)
-                    throws IOException {
-                // 请求成功
-                String ret = response.body().string();
-
-                // 访问UI线程
-                LoginActivity.this.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(LoginActivity.this, ret, Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-            }
-        });
-    }
 
     private void PostDemo_login(String username, String password) {
         // post请求
@@ -112,23 +99,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     ResponseObject responseObject = new Gson().fromJson(response.body().string(), ResponseObject.class);
                     System.out.println(responseObject.getMessage());
                     if (responseObject.getCode() == 200){
-                        LoginActivity.this.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                user_name = username;
-                                keepData();
-                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                                Toast.makeText(LoginActivity.this, responseObject.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                        user_name = username;
+                        keepData();
+                        get_album_name();
                     }
                     else if (responseObject.getCode() == 400){
-                        LoginActivity.this.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(LoginActivity.this, responseObject.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                        ToastUtil.ShortToast("登陆失败");
                     }
 
                     response.body().close();
@@ -174,4 +150,36 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         editor.apply();
     }
 
+    private void get_album_name() {
+        HashMap<String,String> show_album_map = new HashMap<>();
+
+        show_album_map.put("username", LoginActivity.user_name);
+        try {
+            OkHttpUtils.post("picture/show_albums", show_album_map, new Callback()
+            {
+                @Override
+                public void onFailure(@NotNull Call call, @NotNull IOException e)
+                {
+
+                }
+                @Override
+                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException
+                {
+                    ResponseBody responseBody = response.body();
+                    assert responseBody != null;
+                    String json = responseBody.string();
+                    Type type = new TypeToken<ResponseObject<List<String>>>(){}.getType();
+                    ResponseObject<ArrayList<String>> responseObject = new Gson().fromJson(json, type);
+                    if (responseObject.getCode() == 200) {
+                        album_names = responseObject.getData();
+                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        ToastUtil.ShortToast("登陆成功");
+                        Log.d("lkh","login："+album_names.toString());
+                    }
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

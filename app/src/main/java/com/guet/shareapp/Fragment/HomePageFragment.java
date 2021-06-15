@@ -48,8 +48,8 @@ public class HomePageFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         fragments.add(new DiscoverFragment());
-        fragments.add(new MessageFragment());
         fragments.add(new TypeFragment());
+        fragments.add(new MessageFragment());
         initViewPager();
         user_name.setText(LoginActivity.user_name);
         navigation_layout.setOnClickListener(new View.OnClickListener() {

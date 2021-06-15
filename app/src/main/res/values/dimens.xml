@@ -41,7 +41,7 @@
 
 
     <!--video card size-->
-    <dimen name="card_default_height">190dp</dimen>
+    <dimen name="card_default_height">170dp</dimen>
     <dimen name="card_image_default_height">120dp</dimen>
 
 
