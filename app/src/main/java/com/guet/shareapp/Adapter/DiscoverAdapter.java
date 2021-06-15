@@ -35,7 +35,6 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.ViewHo
         //展示的图片
         Glide.with(context)
                 .load(entity.getThumbnailUrl())
-//                .load(entity.getDisplayImgUrl())
                 .error(R.drawable.ic_load)
                 .fitCenter()
                 .into(holder.discoverDisplayImgView);

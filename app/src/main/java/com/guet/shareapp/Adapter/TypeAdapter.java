@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.guet.shareapp.Entity.ImageEntity;
 import com.guet.shareapp.R;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -25,14 +26,8 @@ import java.util.List;
 
 public class TypeAdapter extends RecyclerView.Adapter<TypeAdapter.Type_ViewHolder> {
     Context context;
-    List<String> list;
-    private String[] itemNames = new String[]{
-            "直播", "番剧", "动画",
-            "音乐", "舞蹈", "游戏",
-            "科技", "生活", "鬼畜",
-            "时尚", "广告", "娱乐",
-            "电影", "电视剧", "游戏中心",
-    };
+
+    private List<String> list = new ArrayList<>();
 
     private int[] itemIcons = new int[]{
             R.drawable.ic_category_live, R.drawable.ic_category_t13,
@@ -47,13 +42,25 @@ public class TypeAdapter extends RecyclerView.Adapter<TypeAdapter.Type_ViewHolde
     public TypeAdapter(Context context)
     {
         this.context = context;
-        list.addAll(Arrays.asList(itemNames));
+        list.add("风景");
+        list.add("美食");
+        list.add("人物");
+        list.add("萌宠");
+        list.add("动漫");
+        list.add("图案");
+        list.add("其它");
+        //"番剧", "动画",
+        // "音乐", "舞蹈", "游戏",
+        //  "科技", "生活", "鬼畜",
+        //   "时尚", "广告", "娱乐",
+        //  "电影", "电视剧", "游戏中心"
+        //"风景","美食","人物","萌宠","其它"
     }
 
     @NonNull
     @Override
     public TypeAdapter.Type_ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_discover, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_type, parent, false);
         final TypeAdapter.Type_ViewHolder holder = new TypeAdapter.Type_ViewHolder(view);
         return holder;
     }
@@ -61,7 +68,7 @@ public class TypeAdapter extends RecyclerView.Adapter<TypeAdapter.Type_ViewHolde
     @Override
     public void onBindViewHolder(@NonNull Type_ViewHolder itemViewHolder, int i) {
             itemViewHolder.mItemIcon.setImageResource(itemIcons[i]);
-            itemViewHolder.mItemText.setText(itemNames[i]);
+            itemViewHolder.mItemText.setText(list.get(i));
 
     }
 
@@ -69,7 +76,7 @@ public class TypeAdapter extends RecyclerView.Adapter<TypeAdapter.Type_ViewHolde
 
     @Override
     public int getItemCount() {
-        return itemIcons.length;
+        return list.size();
     }
 
     static class Type_ViewHolder extends RecyclerView.ViewHolder
@@ -84,7 +91,7 @@ public class TypeAdapter extends RecyclerView.Adapter<TypeAdapter.Type_ViewHolde
             super(v);
             itemView = v;
             mItemIcon = v.findViewById(R.id.item_icon);
-            mItemText = v.findViewById(R.id.tv_img_name);
+            mItemText = v.findViewById(R.id.item_title);
 
         }
     }

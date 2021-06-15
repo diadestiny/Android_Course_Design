@@ -47,7 +47,6 @@ public  class OkHttpUtils {
         Request.Builder builder = new Request.Builder()
                 .url(OkHttpUtils.BASE_URL + url); //添加url
         Request request = builder.addHeader("token", OkHttpUtils.token).build();//携带token
-        Log.d(TAG, "get: "+token);
         //构建一个参数的url
         final HttpUrl.Builder newBuilder = request.url().newBuilder();
         if (queryParams != null) {

@@ -77,7 +77,7 @@ public class PublishActivity extends AppCompatActivity {
     TextView typeName;
 
     private PublishAdapter adapter;
-
+    List<String> albumNames = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +89,7 @@ public class PublishActivity extends AppCompatActivity {
         checkBox = findViewById(R.id.choose);
         publish_btn = findViewById(R.id.publish);
         typeName = findViewById(R.id.typeName);
+
         publish_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,6 +103,38 @@ public class PublishActivity extends AppCompatActivity {
         setSpinner();
         initRecyclerview();
         initPermission();
+        get_album_name();
+    }
+
+    private void get_album_name() {
+        HashMap<String,String> show_album_map = new HashMap<>();
+        show_album_map.put("username", LoginActivity.user_name);
+        try {
+            OkHttpUtils.post("picture/show_albums", show_album_map, new Callback()
+            {
+                @Override
+                public void onFailure(@NotNull Call call, @NotNull IOException e)
+                {
+
+                }
+                @Override
+                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException
+                {
+                    ResponseBody responseBody = response.body();
+                    assert responseBody != null;
+                    String json = responseBody.string();
+                    Type type = new TypeToken<ResponseObject<List<String>>>(){}.getType();
+                    ResponseObject<ArrayList<String>> responseObject = new Gson().fromJson(json, type);
+                    if (responseObject.getCode() == 200) {
+                        albumNames = responseObject.getData();
+                        Log.d("lkh",albumNames.toString());
+                    }
+
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void setSpinner() {
@@ -131,7 +164,56 @@ public class PublishActivity extends AppCompatActivity {
             HashMap map=new HashMap<String,String>();
             map.put("username", LoginActivity.user_name);
 
-            OkHttpUtils.post("picture/show_albums", map, new Callback()
+            map.put("intro",editPicInfo.getText().toString());
+            if(checkBox.isChecked()){
+                map.put("visible","true");
+            }else{
+                map.put("visible","false");
+            }
+            map.put("albumName",typeName.getText().toString());
+            if(!albumNames.contains(typeName.getText().toString())){
+                create_album(typeName.getText().toString());
+            }
+            map.put("filename",editPicName.getText().toString());
+            map.put("filepath",list.get(0));
+            //正式上传
+            OkHttpUtils.postPictureWithFile("picture/upload", map, listener, new Callback() {
+                @Override
+                public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                    ToastUtil.ShortToast("上传失败");
+                }
+
+                @Override
+                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                    ResponseBody responseBody = response.body();
+                    assert responseBody != null;
+                    String json = responseBody.string();
+                    Log.e("lkh", json);
+                    if(json.contains("413 Request Entity")){
+                        ToastUtil.ShortToast("图片过大，无法上传");
+                    }else{
+                        ResponseObject responseObject = new Gson().fromJson(json, ResponseObject.class);
+                        if (responseObject.getCode() == 200){
+                            Log.e("lkh","成功");
+                            ToastUtil.ShortToast("上传成功");
+                        }else {
+                            Log.e("lkh", "失败");
+                            ToastUtil.ShortToast("上传失败");
+                        }
+                    }
+
+                }
+            });
+
+        }
+    }
+
+    private void create_album(String name) {
+        HashMap<String,String> album_map = new HashMap<>();
+        album_map.put("username", LoginActivity.user_name);
+        album_map.put("albumName", name);
+        try {
+            OkHttpUtils.post("picture/create_album", album_map, new Callback()
             {
                 @Override
                 public void onFailure(@NotNull Call call, @NotNull IOException e)
@@ -141,66 +223,11 @@ public class PublishActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException
                 {
-                    ResponseBody responseBody = response.body();
-                    assert responseBody != null;
-                    String json = responseBody.string();
-//                    Log.e("lkh", json);
-                    Type type = new TypeToken<ResponseObject<List<String>>>(){}.getType();
-                    ResponseObject<ArrayList<String>> responseObject = new Gson().fromJson(json, type);
-                    if (responseObject.getCode() == 200) {
-                        if(!responseObject.getData().contains(typeName.toString())){
-                            HashMap map2 = new HashMap<String,String>();
-                            map2.put("username",LoginActivity.user_name);
-                            map2.put("albumName",typeName.getText().toString());
-                            OkHttpUtils.post("picture/create_album", map2, new Callback() {
-                                @Override
-                                public void onFailure(Call call, IOException e) {
-                                    ToastUtil.ShortToast("相册创建失败");
-                                }
-
-                                @Override
-                                public void onResponse(Call call, Response response) throws IOException {
-
-                                }
-                            });
-                        }
-                    }
-
+                    Log.d("lkh",response.toString());
                 }
             });
-
-            map.put("intro",editPicInfo.getText().toString());
-            if(checkBox.isChecked()){
-                map.put("visible","true");
-            }else{
-                map.put("visible","false");
-            }
-            map.put("albumName",typeName.getText().toString());
-            map.put("filename",editPicName.getText().toString());
-
-            map.put("filepath",list.get(0));
-//正式上传
-            OkHttpUtils.postPictureWithFile("picture/upload", map, listener, new Callback() {
-                @Override
-                public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                    ToastUtil.ShortToast("上传失败");
-                }
-
-                @Override
-                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                    Log.e("lkh",response.body().string());
-                    ResponseObject responeObject = new Gson().fromJson(response.body().string(), ResponseObject.class);
-                    if (responeObject.getCode() == 200){
-//                            finish();
-                            ToastUtil.ShortToast("上传成功");
-                    }else {
-                        Log.e("lkh", "失败");
-                        ToastUtil.ShortToast("上传失败");
-                    }
-
-                }
-            });
-
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

@@ -76,6 +76,11 @@ public class DiscoverFragment extends Fragment {
             @Override
             public void onRefresh(RefreshLayout refreshlayout)
             {
+                try {
+                    add_top_data();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 adapter.notifyDataSetChanged();
                 refreshlayout.finishRefresh(400/*,false*/);//传入false表示刷新失败
             }
@@ -99,6 +104,42 @@ public class DiscoverFragment extends Fragment {
         recyclerView.setLayoutManager(manager);
         FloatingActionButton ftb = view.findViewById(R.id.float_btn);
         ftb.setOnClickListener(v -> startActivity( new Intent(getContext(), PublishActivity.class)));
+    }
+
+    private void add_top_data() throws IOException {
+        Map<String, String> map = new HashMap<>();
+        pageNum = 1;
+        map.put("page", String.valueOf(pageNum));
+        map.put("num", String.valueOf(pageSize));
+        OkHttpUtils.post("picture/index", map, new Callback()
+        {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e)
+            {
+
+            }
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException
+            {
+                ResponseBody responseBody = response.body();
+                assert responseBody != null;
+                String json = responseBody.string();
+                //Log.e("json", json);
+                if(json.contains("<title>404 Not Found</title>")){
+                    ToastUtil.ShortToast("已经加载完毕");
+                }else{
+                    Type type = new TypeToken<ResponseObject<List<ImageEntity>>>(){}.getType();
+                    ResponseObject<ArrayList<ImageEntity>> responseObject = new Gson().fromJson(json, type);
+                    if (responseObject.getCode() == 200 ) {
+                        discoverList.clear();
+                        discoverList.addAll(responseObject.getData());
+                        new Handler(Looper.getMainLooper()).post(() -> {
+                            adapter.notifyDataSetChanged();
+                        });
+                    }
+                }
+            }
+        });
     }
 
     private void loadData() throws IOException {
