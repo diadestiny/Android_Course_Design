@@ -1,5 +1,6 @@
 package com.guet.shareapp.Common;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -71,6 +72,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         drawerLayout.closeDrawer(GravityCompat.START);
+        switch (menuItem.getItemId()){
+            case R.id.item_group:
+                // 悦享聊天
+                startActivity(new Intent(MainActivity.this, ChatActivity.class));
+                return true;
+        }
         return false;
     }
 
