@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:padding="5dp"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/zuo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_margin="5dp"
+            android:id="@+id/zuoimg"
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
+
+        <TextView
+            android:text="1234567891234568976545678231231231231231231231239231456"
+            android:id="@+id/zuotext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/zuoimg"
+            android:layout_margin="5dp"
+            android:background="@mipmap/qp2"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/you"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_margin="5dp"
+            android:id="@+id/youimg"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true" />
+        <TextView
+            android:id="@+id/youtext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@id/youimg"
+            android:layout_margin="5dp"
+            android:background="@mipmap/qqq"
+            android:text="1234567890123413123123123123123568901236547890"
+            android:textSize="20sp" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>
