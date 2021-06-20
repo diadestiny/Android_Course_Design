@@ -81,6 +81,7 @@ public class MyInfoActivity extends AppCompatActivity {
                 .into(ivHeadIcon);
         HashMap<String,String> tmp = new HashMap<>();
         tmp.put("username", LoginActivity.user_name);
+
         Thread t= new Thread(){
             @Override
             public void run() {

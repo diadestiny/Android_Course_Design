@@ -26,7 +26,8 @@
         android:theme="@style/AppTheme">
         <activity android:name=".Common.MyInfoActivity"></activity>
         <activity android:name=".Common.ChatActivity" />
-        <activity android:name=".Common.AlbumActivity" />
+        <activity android:name=".Common.AlbumActivity"
+            android:launchMode="singleTop"/>
         <activity
             android:name=".Common.SplashActivity"
             android:theme="@style/ColorTranslucentTheme">

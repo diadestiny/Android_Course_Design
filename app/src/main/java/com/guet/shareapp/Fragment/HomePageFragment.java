@@ -55,6 +55,7 @@ public class HomePageFragment extends Fragment {
         fragments.add(new DiscoverFragment());
         fragments.add(new TypeFragment());
         fragments.add(new MessageFragment());
+        fragments.add(new RecommendFragment());
         initViewPager();
         Glide.with(this)
                 .load("https://www.2020agc.site/user/show_avatar/"+LoginActivity.user_name)

@@ -52,9 +52,6 @@ public class DiscoverFragment extends Fragment {
     private static final int pageSize = 3;
     String json;
 
-    public static DiscoverFragment newIntance() {
-        return new DiscoverFragment();
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
