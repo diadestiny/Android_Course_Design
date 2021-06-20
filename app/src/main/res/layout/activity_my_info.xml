@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical">
+
+
+
+        <!--间隔-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:background="#eee" />
+
+        <!--头像-->
+        <LinearLayout
+            android:id="@+id/ll_head_icon_box_my_info"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/item_selector"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="头像"
+                android:textColor="#666"
+                android:textSize="17sp" />
+
+            <com.guet.shareapp.View.CircleImageView
+                android:id="@+id/iv_head"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center_vertical"/>
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:gravity="center"
+                android:src="@drawable/ic_arrow_forward_16dp" />
+
+        </LinearLayout>
+
+        <!--昵称-->
+        <RelativeLayout
+            android:id="@+id/ll_username_box_my_info"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/item_selector"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/t1"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="昵称"
+                android:textColor="#666"
+                android:textSize="17sp" />
+
+            <EditText
+                android:id="@+id/user_name"
+                android:layout_toEndOf="@+id/t1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="匿名网友"
+                android:textSize="17sp" />
+
+        </RelativeLayout>
+
+        <!--账号-->
+        <RelativeLayout
+            android:id="@+id/ll_account_box_my_info"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/item_selector"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/t2"
+                android:layout_height="match_parent"
+                android:layout_width="80dp"
+                android:gravity="center_vertical"
+                android:text="邮箱"
+                android:textColor="#666"
+                android:textSize="17sp" />
+
+            <EditText
+                android:layout_toEndOf="@+id/t2"
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="1247889154@qq.com"
+                android:textSize="17sp" />
+
+
+        </RelativeLayout>
+
+        <!--手机号-->
+        <RelativeLayout
+            android:id="@+id/ll_phone_box_my_info"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/item_selector"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/t3"
+                android:layout_height="match_parent"
+                android:layout_width="80dp"
+                android:gravity="center_vertical"
+                android:text="手机号"
+                android:textColor="#666"
+                android:textSize="17sp" />
+
+            <EditText
+                android:layout_toRightOf="@+id/t3"
+                android:id="@+id/number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="13025638806"
+                android:textSize="17sp" />
+
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/item_selector"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="个性签名"
+                android:textColor="#666"
+                android:textSize="17sp" />
+
+            <EditText
+                android:id="@+id/my_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:hint="这个人很懒,暂无个性签名"
+                android:textSize="17sp" />
+
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/save_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/item_selector"
+                android:text="保存修改"
+                android:textColor="@color/blue"
+                android:textSize="18sp" />
+
+        </RelativeLayout>
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

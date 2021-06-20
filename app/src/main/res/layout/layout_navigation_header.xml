@@ -11,14 +11,6 @@
         android:layout_height="match_parent"
         android:background="@color/colorPrimary">
 
-        <ImageView
-            android:id="@+id/background_image_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center|end|bottom"
-            android:clickable="true"
-            android:src="@drawable/home_menu_bg_click"
-            android:tint="@color/nav_head_image_background" />
     </FrameLayout>
 
     <RelativeLayout
@@ -60,7 +52,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/default_grow_margin"
-                android:src="@drawable/ic_switch_night" />
+                android:src="@drawable/ic_switch_daily" />
 
 
         </LinearLayout>
@@ -115,15 +107,6 @@
                 android:text="@string/members"
                 android:textColor="@color/nav_head_roung_text_background"
                 android:textSize="10sp" />
-
-            <TextView
-                android:id="@+id/user_other_info"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/default_tiny_margin"
-                android:textColor="@color/white"
-                android:textSize="@dimen/navigation_subtitle_secondary_text_size" />
-
 
         </LinearLayout>
 

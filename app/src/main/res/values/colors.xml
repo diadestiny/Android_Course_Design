@@ -105,4 +105,6 @@
     <color name="red">#F44336</color>
     <color name="red_dark">#C62828</color>
     <color name="red_trans">#99F44336</color>
+
+    <color name="item_selected">#EEEEEE</color>
 </resources>

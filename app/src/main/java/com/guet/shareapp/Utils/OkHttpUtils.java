@@ -80,15 +80,18 @@ public  class OkHttpUtils {
     }
 
     //上传头像
-    public static  void postWithBody(String url, Map<String, String> fileInfo, FileProgressRequestBody.ProgressListener listener, Callback callback) throws IOException {
-        String filePath = fileInfo.get("filePath");
-        String fileName = fileInfo.get("fileName");
+    public static  void post_head(String url, Map<String, String> uploadInfo, FileProgressRequestBody.ProgressListener listener, Callback callback) throws IOException {
+        String username = uploadInfo.get("username");
+        String filepath = uploadInfo.get("filepath");
+        File file = new File(filepath);
 
-        File file = new File(filePath);
-        //RequestBody requestBody = FormBody.create(file, );
-        FileProgressRequestBody fileProgressRequestBody = new FileProgressRequestBody(file, "application/form-data;charset=utf-8", listener);
-        MultipartBody file1 = new MultipartBody.Builder().setType(MultipartBody.FORM)
-                .addFormDataPart("file", fileName, fileProgressRequestBody ).build();
+        FileProgressRequestBody fileProgressRequestBody = new FileProgressRequestBody(file, "image/"+file.getName().substring(file.getName().lastIndexOf(".")), listener);
+
+        MultipartBody build = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                .addFormDataPart("file",file.getName(), fileProgressRequestBody)
+                .addFormDataPart("username", username)
+                .build();
+
         Request.Builder builder = new Request.Builder();
         // 创建一个 request
         Request request = builder.url(BASE_URL+url).build();
@@ -96,7 +99,7 @@ public  class OkHttpUtils {
         Headers.Builder headerBuilder = request.headers().newBuilder();
         headerBuilder.add("token",token);
         // 设置自定义的 builder
-        builder.headers(headerBuilder.build()).post(file1);
+        builder.headers(headerBuilder.build()).post(build);
         okHttpClient.newCall(builder.build()).enqueue(callback);
     }
 

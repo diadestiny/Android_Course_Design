@@ -105,7 +105,7 @@
 
 
     <!-- Navigation Items -->
-    <string name="item_home">主页</string>
+    <string name="item_home">我的信息</string>
     <string name="item_group">悦享聊天</string>
     <string name="item_tracker">我的钱包</string>
     <string name="item_downloaded">离线缓存</string>

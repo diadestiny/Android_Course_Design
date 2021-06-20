@@ -18,9 +18,6 @@ import java.util.List;
 
 
 /**
- * Created by hcc on 2016/10/23 10:23
- * 100332338@qq.com
- * <p>
  * 首页分区adapter
  */
 

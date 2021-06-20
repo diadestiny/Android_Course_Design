@@ -49,7 +49,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private TextView registerView;
     private CheckBox checkBox;
     private SharedPreferences sharedPreferences=null;
-    public static List<String> album_names = new ArrayList<>();
+
 
 
     @Override
@@ -101,7 +101,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     if (responseObject.getCode() == 200){
                         user_name = username;
                         keepData();
-                        get_album_name();
+                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        ToastUtil.ShortToast("登陆成功");
                     }
                     else if (responseObject.getCode() == 400){
                         ToastUtil.ShortToast("登陆失败");
@@ -150,36 +151,5 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         editor.apply();
     }
 
-    private void get_album_name() {
-        HashMap<String,String> show_album_map = new HashMap<>();
 
-        show_album_map.put("username", LoginActivity.user_name);
-        try {
-            OkHttpUtils.post("picture/show_albums", show_album_map, new Callback()
-            {
-                @Override
-                public void onFailure(@NotNull Call call, @NotNull IOException e)
-                {
-
-                }
-                @Override
-                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException
-                {
-                    ResponseBody responseBody = response.body();
-                    assert responseBody != null;
-                    String json = responseBody.string();
-                    Type type = new TypeToken<ResponseObject<List<String>>>(){}.getType();
-                    ResponseObject<ArrayList<String>> responseObject = new Gson().fromJson(json, type);
-                    if (responseObject.getCode() == 200) {
-                        album_names = responseObject.getData();
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                        ToastUtil.ShortToast("登陆成功");
-                        Log.d("lkh","login："+album_names.toString());
-                    }
-                }
-            });
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }

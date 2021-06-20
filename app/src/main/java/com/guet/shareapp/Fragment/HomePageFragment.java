@@ -6,12 +6,16 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.guet.shareapp.Adapter.HomePagerAdapter;
 import com.guet.shareapp.Common.LoginActivity;
@@ -28,6 +32,7 @@ public class HomePageFragment extends Fragment {
     SlidingTabLayout mSlidingTab;
     LinearLayout navigation_layout;
     TextView user_name;
+    ImageView head;
     private List<Fragment> fragments = new ArrayList<>();
 
     public HomePageFragment() { }
@@ -40,7 +45,7 @@ public class HomePageFragment extends Fragment {
         mSlidingTab = view.findViewById(R.id.sliding_tabs);
         navigation_layout = view.findViewById(R.id.navigation_layout);
         user_name = view.findViewById(R.id.home_user_name);
-
+        head = view.findViewById(R.id.toolbar_user_avatar);
         return view;
     }
 
@@ -51,6 +56,10 @@ public class HomePageFragment extends Fragment {
         fragments.add(new TypeFragment());
         fragments.add(new MessageFragment());
         initViewPager();
+        Glide.with(this)
+                .load("https://www.2020agc.site/user/show_avatar/"+LoginActivity.user_name)
+                .fitCenter()
+                .into(head);
         user_name.setText(LoginActivity.user_name);
         navigation_layout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,4 +84,14 @@ public class HomePageFragment extends Fragment {
         return new HomePageFragment();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        Glide.with(getContext())
+                .load("https://www.2020agc.site/user/show_avatar/"+LoginActivity.user_name)
+                .fitCenter()
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .into(head);
+    }
 }
