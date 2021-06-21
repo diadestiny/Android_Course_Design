@@ -135,4 +135,15 @@ public  class OkHttpUtils {
         okHttpClient.newCall(builder.build()).enqueue(callback);
     }
 
+    public static void my_post(String url,  Callback callback) throws IOException {
+        // 创建一个请求 Builder
+        FormBody.Builder builder = new FormBody.Builder();
+
+        RequestBody formBody = builder.build();
+        // 创建一个 request
+        Request request = new Request.Builder().url(url).post(formBody).build();
+        okHttpClient.newCall(request).enqueue(callback);
+    }
+
+
 }
