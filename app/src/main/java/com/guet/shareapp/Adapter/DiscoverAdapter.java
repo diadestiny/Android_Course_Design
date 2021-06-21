@@ -1,8 +1,11 @@
 package com.guet.shareapp.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,22 +13,44 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.guet.shareapp.Common.LoginActivity;
 import com.guet.shareapp.Entity.ImageEntity;
+import com.guet.shareapp.Fragment.DiscoverFragment;
 import com.guet.shareapp.R;
+import com.guet.shareapp.Utils.OkHttpUtils;
+import com.guet.shareapp.Utils.ToastUtil;
+import com.guet.shareapp.domain.ResponseObject;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.ViewHolder>{
 
     private List<ImageEntity> discoverList;
     private Context context;
-//    BottomSheetDialog dialog;
 
 
     public DiscoverAdapter(Context context, List<ImageEntity>List)
     {
         this.discoverList = List;
         this.context = context;
+
     }
+
+
+
 
     @Override
     public void onBindViewHolder(@NonNull DiscoverAdapter.ViewHolder holder, int position)
@@ -43,24 +68,21 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.ViewHo
         Glide.with(context)
                 .load(entity.getAuthorProfileImgUrl())
                 .centerCrop()
-                //太耗时
-//                .placeholder(R.drawable.defalut_profile)
                 .error(R.drawable.head)
                 .into(holder.discoverAuthorProfileImgView);
         holder.discoverImgNameTextView.setText(entity.getDisplayImgName());
         holder.discoverAuthorNameTextView.setText(entity.getAuthorName());
         holder.discoverStarNumTextView.setText(String.valueOf(entity.getStarNum()));
-
-        if (entity.isStared())  //已经点赞
-        {
+        if(discoverList.get(position).getStared()){
             holder.discoverLikeImgView.setImageResource(R.drawable.ic_unlike);
-        }
-        else //未点赞
-        {
+        }else{
             holder.discoverLikeImgView.setImageResource(R.drawable.ic_like);
         }
-//        holder.squareDownloadNumTextView.setText(String.valueOf(entity.getDownloadNum()));
+        Log.d("lkh",entity.getImgID()+" "+entity.getStared());
+
+
     }
+
 
     @NonNull
     @Override
@@ -84,52 +106,53 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.ViewHo
 //            }
 //        });
 
-//        holder.squareLikeImgView.setOnClickListener(new View.OnClickListener()
-//        {
-//            @Override
-//            public void onClick(View view)
-//            {
-//                int position = holder.getAdapterPosition();
-//                ImageEntity entity = squareList.get(position);
-//                if (entity.isStared())  //已经点赞，则取消
-//                {
-//                    entity.setStared(false);
-//                    entity.setStarNum(entity.getStarNum() - 1);
-//                    holder.squareStarNumTextView.setText(String.valueOf(entity.getStarNum()));
-//                    holder.squareLikeImgView.setImageResource(R.drawable.ic_like);
-//                }
-//                else    //未点赞，则加上
-//                {
-//                    entity.setStared(true);
-//                    entity.setStarNum(entity.getStarNum() + 1);
-//                    holder.squareStarNumTextView.setText(String.valueOf(entity.getStarNum()));
-//                    holder.squareLikeImgView.setImageResource(R.drawable.ic_unlike);
-//                }
-//
-//                //改变云端点赞数量
-//                Map<String, String> map = new HashMap<>();
-//                map.put("pictureId", entity.getImgID());
-//                String json = new Gson().toJson(map);
-//                try
-//                {
-//                    OkhttpUtils.post("picture/star", json, new Callback()
-//                    {
-//                        @Override
-//                        public void onFailure(@NotNull Call call, @NotNull IOException e)
-//                        {
-//                        }
-//
-//                        @Override
-//                        public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException
-//                        {
-//                        }
-//                    });
-//                } catch (IOException e)
-//                {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
+        holder.discoverLikeImgView.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                int position = holder.getAdapterPosition();
+                ImageEntity entity = discoverList.get(position);
+                if (entity.getStared())  //已经点赞，则取消
+                {
+                    entity.setStared(false);
+                    entity.setStarNum(entity.getStarNum() - 1);
+                    holder.discoverLikeImgView.setImageResource(R.drawable.ic_like);
+                    holder.discoverStarNumTextView.setText(String.valueOf(entity.getStarNum()));
+                }
+                else    //未点赞，则加上
+                {
+                    entity.setStared(true);
+                    entity.setStarNum(entity.getStarNum() + 1);
+                    holder.discoverLikeImgView.setImageResource(R.drawable.ic_unlike);
+                    holder.discoverStarNumTextView.setText(String.valueOf(entity.getStarNum()));
+                }
+
+                //改变云端点赞数量
+                HashMap<String, String> map = new HashMap<>();
+                map.put("username", LoginActivity.user_name);
+                map.put("picId", entity.getImgID());
+                try
+                {
+                    OkHttpUtils.post("user/change_star_picture", map, new Callback()
+                    {
+                        @Override
+                        public void onFailure(@NotNull Call call, @NotNull IOException e)
+                        {
+                        }
+
+                        @Override
+                        public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException
+                        {
+//                            ToastUtil.ShortToast("点赞成功");
+                        }
+                    });
+                } catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        });
 
 //        holder.squareDownloadImgView.setOnClickListener(new View.OnClickListener()
 //        {
@@ -231,8 +254,6 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.ViewHo
         ImageView discoverAuthorProfileImgView;
         TextView discoverStarNumTextView;
         ImageView discoverLikeImgView;
-        TextView  squareDownloadNumTextView;
-        ImageView squareDownloadImgView;
 
         public ViewHolder(View v)
         {

@@ -86,7 +86,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxLength="9"
-                android:text="点赞量"
+                android:text="点赞"
                 android:layout_gravity="center"
                 android:textSize="13sp"
                 android:layout_marginStart="3dp"

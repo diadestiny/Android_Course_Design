@@ -6,6 +6,7 @@ import java.io.Serializable;
 
 public class ImageEntity implements Serializable
 {
+    @SerializedName("pic_id")
     private String imgID;
     private String authorID;
     private String displayImgUrl;
@@ -18,7 +19,7 @@ public class ImageEntity implements Serializable
     private String authorName;
     @SerializedName("avatar_url")
     private String authorProfileImgUrl;
-    @SerializedName("stared")
+    @SerializedName("is_star")
     private boolean isStared;
     @SerializedName("pic_url")
     private String thumbnailUrl;
@@ -92,9 +93,7 @@ public class ImageEntity implements Serializable
     {
         return authorProfileImgUrl;
     }
-
-    public boolean isStared()
-    {
+    public boolean getStared(){
         return isStared;
     }
 
@@ -107,4 +106,5 @@ public class ImageEntity implements Serializable
     {
         this.starNum = starNum;
     }
+
 }

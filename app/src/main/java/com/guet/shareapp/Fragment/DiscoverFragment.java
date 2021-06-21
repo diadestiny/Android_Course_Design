@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.guet.shareapp.Adapter.DiscoverAdapter;
+import com.guet.shareapp.Common.LoginActivity;
 import com.guet.shareapp.Common.PublishActivity;
 import com.guet.shareapp.Entity.ImageEntity;
 import com.guet.shareapp.R;
@@ -106,6 +107,7 @@ public class DiscoverFragment extends Fragment {
         pageNum = 1;
         map.put("page", String.valueOf(pageNum));
         map.put("num", String.valueOf(pageSize));
+        map.put("username",LoginActivity.user_name);
         OkHttpUtils.post("picture/index", map, new Callback()
         {
             @Override
@@ -142,6 +144,7 @@ public class DiscoverFragment extends Fragment {
         ++pageNum;
         map.put("page", String.valueOf(pageNum));
         map.put("num", String.valueOf(pageSize));
+        map.put("username",LoginActivity.user_name);
         OkHttpUtils.post("picture/index", map, new Callback()
         {
             @Override
@@ -177,7 +180,6 @@ public class DiscoverFragment extends Fragment {
         adapter = new DiscoverAdapter(getContext(), discoverList);
         recyclerView.setAdapter(adapter);
     }
-
 
 
 }
