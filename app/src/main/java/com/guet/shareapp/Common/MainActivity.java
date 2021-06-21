@@ -25,6 +25,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.guet.shareapp.Fragment.HomePageFragment;
 import com.guet.shareapp.R;
+
 import com.guet.shareapp.View.CircleImageView;
 
 
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private HomePageFragment mHomePageFragment;
     NavigationView navigationView;
     DrawerLayout drawerLayout;
-    private CircleImageView userAvatarView;
+    CircleImageView mUserAvatarView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,13 +55,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void initNavigationView() {
         navigationView.setNavigationItemSelectedListener(this);
         View headerView = navigationView.getHeaderView(0);
-        userAvatarView = (CircleImageView) headerView.findViewById(R.id.user_avatar_view);
+        mUserAvatarView = (CircleImageView) headerView.findViewById(R.id.user_avatar_view);
         TextView mUserName = (TextView) headerView.findViewById(R.id.user_name);
         //设置头像
         Glide.with(MainActivity.this)
                 .load("https://www.2020agc.site/user/show_avatar/"+LoginActivity.user_name)
                 .fitCenter()
-                .into(userAvatarView);
+                .into(mUserAvatarView);
         //设置用户名
         mUserName.setText(LoginActivity.user_name);
 
@@ -108,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .fitCenter()
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(true)
-                .into(userAvatarView);
+                .into(mUserAvatarView);
     }
 
 }

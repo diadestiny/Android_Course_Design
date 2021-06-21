@@ -106,7 +106,7 @@ public class TypeFragment extends Fragment implements Runnable{
                 ResponseBody responseBody = response.body();
                 assert responseBody != null;
                 String json = responseBody.string();
-                Log.e("json", json);
+//                Log.e("json", json);
                 Type type = new TypeToken<ResponseObject<List<Integer>>>(){}.getType();
                 ResponseObject<ArrayList<Integer>> responseObject = new Gson().fromJson(json, type);
                 if (responseObject.getCode() == 200 ) {

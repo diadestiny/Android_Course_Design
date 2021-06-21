@@ -206,8 +206,8 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.ViewHo
             public void onClick(View view)
             {
                 int position = holder.getAdapterPosition();
-                ImageEntity entity = discoverList.get(position);
-                Toast.makeText(context, entity.getAuthorName(), Toast.LENGTH_SHORT).show();
+//                ImageEntity entity = discoverList.get(position);
+//                Toast.makeText(context, entity.getAuthorName(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -233,9 +233,6 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.ViewHo
         ImageView discoverLikeImgView;
         TextView  squareDownloadNumTextView;
         ImageView squareDownloadImgView;
-//        ImageView squareCommentImgView;
-//        TextView  squareCommentNumTextView;
-//        ImageView squareMoreImgView;
 
         public ViewHolder(View v)
         {

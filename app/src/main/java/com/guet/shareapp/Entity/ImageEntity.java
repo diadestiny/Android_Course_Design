@@ -16,7 +16,7 @@ public class ImageEntity implements Serializable
     private int    downloadNum;
     @SerializedName("username")
     private String authorName;
-    @SerializedName("authorAvatar")
+    @SerializedName("avatar_url")
     private String authorProfileImgUrl;
     @SerializedName("stared")
     private boolean isStared;

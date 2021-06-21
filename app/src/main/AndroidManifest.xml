@@ -24,10 +24,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Common.MyInfoActivity"></activity>
+        <activity android:name=".Common.SearchActivity"
+            android:launchMode="singleTask"></activity>
+        <activity android:name=".Common.MyInfoActivity" />
         <activity android:name=".Common.ChatActivity" />
-        <activity android:name=".Common.AlbumActivity"
-            android:launchMode="singleTop"/>
+        <activity
+            android:name=".Common.AlbumActivity"
+            android:launchMode="singleTop" />
         <activity
             android:name=".Common.SplashActivity"
             android:theme="@style/ColorTranslucentTheme">
@@ -48,7 +51,8 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/MainActivityColorTranslucentTheme"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
+            />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

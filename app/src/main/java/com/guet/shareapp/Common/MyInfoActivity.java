@@ -140,7 +140,7 @@ public class MyInfoActivity extends AppCompatActivity {
                         .capture(true)//选择照片时，是否显示拍照
                         .captureStrategy(new CaptureStrategy(true, "com.guet.shareapp.fileprovider"))//参数1 true表示拍照存储在共有目录，false表示存储在私有目录；参数2与 AndroidManifest中authorities值相同，用于适配7.0系统 必须设置
                         .imageEngine(new GlideEngine())//图片加载引擎
-                        .forResult(REQUEST_CODE_CHOOSE);//
+                        .forResult(REQUEST_CODE_CHOOSE);
             }
         });
     }
@@ -163,7 +163,6 @@ public class MyInfoActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(@NotNull Call call, @NotNull IOException e)
                     {
-
                     }
                     @Override
                     public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException
@@ -210,7 +209,6 @@ public class MyInfoActivity extends AppCompatActivity {
                             ResponseBody responseBody = response.body();
                             assert responseBody != null;
                             String json = responseBody.string();
-//                            Log.e("lkh", json);
                             if(json.contains("413 Request Entity")){
                                 ToastUtil.ShortToast("图片过大，无法上传");
                             }else{

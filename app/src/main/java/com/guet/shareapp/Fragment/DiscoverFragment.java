@@ -50,8 +50,6 @@ public class DiscoverFragment extends Fragment {
     RefreshLayout refreshLayout;
     private int pageNum;
     private static final int pageSize = 3;
-    String json;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,7 +65,7 @@ public class DiscoverFragment extends Fragment {
     }
 
     private void initView() {
-        refreshLayout = view.findViewById(R.id.refreshLayout_square);
+        refreshLayout = view.findViewById(R.id.refreshLayout_discover);
         refreshLayout.setOnRefreshListener(new OnRefreshListener()
         {
             @Override
@@ -157,7 +155,6 @@ public class DiscoverFragment extends Fragment {
                 ResponseBody responseBody = response.body();
                 assert responseBody != null;
                 String json = responseBody.string();
-                //Log.e("json", json);
                 if(json.contains("<title>404 Not Found</title>")){
                     ToastUtil.ShortToast("已经加载完毕");
                 }else{

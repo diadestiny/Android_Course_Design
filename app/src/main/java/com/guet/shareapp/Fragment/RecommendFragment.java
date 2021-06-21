@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.guet.shareapp.Common.AlbumActivity;
 import com.guet.shareapp.Common.LoginActivity;
+import com.guet.shareapp.Common.SearchActivity;
 import com.guet.shareapp.R;
 import com.guet.shareapp.Utils.OkHttpUtils;
 import com.guet.shareapp.Utils.ToastUtil;
@@ -51,35 +52,13 @@ public class RecommendFragment extends Fragment {
         search_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Map<String, String> map = new HashMap<>();
-//                map.put("username", LoginActivity.user_name);
-//                map.put("albumName",album_names.get(pos));
-//                OkHttpUtils.post("picture/baidu_index", map, new Callback()
-//                {
-//                    @Override
-//                    public void onFailure(@NotNull Call call, @NotNull IOException e)
-//                    {
-//                        ToastUtil.ShortToast("该相册打开失败");
-//                    }
-//                    @Override
-//                    public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException
-//                    {
-//                        ResponseBody responseBody = response.body();
-//                        assert responseBody != null;
-//                        String json = responseBody.string();
-//                        Log.e("json", json);
-//                        Type type = new TypeToken<ResponseObject<List<Integer>>>(){}.getType();
-//                        ResponseObject<ArrayList<Integer>> responseObject = new Gson().fromJson(json, type);
-//                        if (responseObject.getCode() == 200 ) {
-//                            album_picture_ids.clear();
-//                            album_picture_ids.addAll(responseObject.getData());
-//                            Intent intent = new Intent(getContext(), AlbumActivity.class);
-//                            startActivity(intent);
-//                        }
-//                    }
-//                });
+               Intent intent = new Intent(getContext(), SearchActivity.class);
+               intent.putExtra("search",mSearchEdit.getText().toString());
+               startActivity(intent);
             }
         });
     }
+
+
 
 }
