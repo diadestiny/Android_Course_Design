@@ -79,4 +79,5 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.Album_ViewHo
         }
     }
 
+
 }

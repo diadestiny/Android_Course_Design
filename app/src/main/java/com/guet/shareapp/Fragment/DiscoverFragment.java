@@ -6,21 +6,28 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 
+import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.guet.shareapp.Adapter.DiscoverAdapter;
 import com.guet.shareapp.Common.LoginActivity;
+import com.guet.shareapp.Common.MainActivity;
 import com.guet.shareapp.Common.PublishActivity;
 import com.guet.shareapp.Entity.ImageEntity;
+import com.guet.shareapp.Interface.OnItemClickListener;
 import com.guet.shareapp.R;
 import com.guet.shareapp.Utils.OkHttpUtils;
 import com.guet.shareapp.Utils.ToastUtil;
@@ -50,6 +57,7 @@ public class DiscoverFragment extends Fragment {
     ArrayList<ImageEntity> discoverList;
     RefreshLayout refreshLayout;
     private int pageNum;
+    private BottomSheetDialog dialog;
     private static final int pageSize = 3;
 
     @Override
@@ -178,8 +186,58 @@ public class DiscoverFragment extends Fragment {
         pageNum = 0; //重新初始化数据，避免保存上次的浏览记录导致再次切换时会在上一次的基础上进行刷新7
         loadData();
         adapter = new DiscoverAdapter(getContext(), discoverList);
+        adapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                showCommentDialog(position);
+            }
+        });
         recyclerView.setAdapter(adapter);
     }
 
+    private void showCommentDialog(int pos){
+        dialog = new BottomSheetDialog(getContext());
+        View commentView = LayoutInflater.from(getContext()).inflate(R.layout.comment_dialog_layout,null);
+        final EditText commentText = commentView.findViewById(R.id.dialog_comment_et);
+        final Button bt_comment = commentView.findViewById(R.id.dialog_comment_bt);
+        dialog.setContentView(commentView);
+        View parent = (View) commentView.getParent();
+        BottomSheetBehavior behavior = BottomSheetBehavior.from(parent);
+        commentView.measure(0,0);
+        behavior.setPeekHeight(commentView.getMeasuredHeight());
+        bt_comment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String commentContent = commentText.getText().toString().trim();
+                if(!TextUtils.isEmpty(commentContent)){
+                    Map<String, String> map = new HashMap<>();
+                    map.put("username", LoginActivity.user_name);
+                    map.put("pic_id", discoverList.get(pos).getImgID());
+                    map.put("content", commentText.getText().toString());
+                    try {
+                        OkHttpUtils.post("comment/add", map, new Callback()
+                        {
+                            @Override
+                            public void onFailure(@NotNull Call call, @NotNull IOException e)
+                            {
+
+                            }
+                            @Override
+                            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException
+                            {
+                               ToastUtil.ShortToast(discoverList.get(pos).getImgID());
+                            }
+                        });
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    dialog.dismiss();
+                }else {
+                    ToastUtil.ShortToast("评论不能为空");
+                }
+            }
+        });
+        dialog.show();
+    }
 
 }

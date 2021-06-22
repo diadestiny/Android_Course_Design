@@ -18,6 +18,7 @@ import com.google.gson.reflect.TypeToken;
 import com.guet.shareapp.Common.LoginActivity;
 import com.guet.shareapp.Entity.ImageEntity;
 import com.guet.shareapp.Fragment.DiscoverFragment;
+import com.guet.shareapp.Interface.OnItemClickListener;
 import com.guet.shareapp.R;
 import com.guet.shareapp.Utils.OkHttpUtils;
 import com.guet.shareapp.Utils.ToastUtil;
@@ -40,17 +41,18 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.ViewHo
 
     private List<ImageEntity> discoverList;
     private Context context;
+    private OnItemClickListener onItemClickListener;
 
 
     public DiscoverAdapter(Context context, List<ImageEntity>List)
     {
         this.discoverList = List;
         this.context = context;
-
     }
 
-
-
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
 
     @Override
     public void onBindViewHolder(@NonNull DiscoverAdapter.ViewHolder holder, int position)
@@ -90,21 +92,6 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.ViewHo
     {
         View view = LayoutInflater.from(context).inflate(R.layout.item_discover, parent, false);
         final ViewHolder holder = new ViewHolder(view);
-
-
-
-//        holder.squareDisplayImgView.setOnClickListener(new View.OnClickListener()
-//        {
-//            @Override
-//            public void onClick(View view)
-//            {
-//                int position = holder.getAdapterPosition();
-//                ImageEntity entity = squareList.get(position);
-//                Intent intent = new Intent(context, ImageDetailActivity.class);
-//                intent.putExtra("ImageEntity", entity);
-//                context.startActivity(intent);
-//            }
-//        });
 
         holder.discoverLikeImgView.setOnClickListener(new View.OnClickListener()
         {
@@ -154,83 +141,18 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.ViewHo
             }
         });
 
-//        holder.squareDownloadImgView.setOnClickListener(new View.OnClickListener()
-//        {
-//            @Override
-//            public void onClick(View view)
-//            {
-//                int position = holder.getAdapterPosition();
-//                ImageEntity entity = squareList.get(position);
-//
-//                holder.squareDownloadImgView.setClickable(false);
-////                holder.squareDownloadImgView.setImageResource(R.drawable.ic_downloaded);
-//                entity.setDownloadNum(entity.getDownloadNum() + 1);
-//                holder.squareDownloadNumTextView.setText(String.valueOf(entity.getDownloadNum()));
-//
-//                //更新云端数据：此图片下载数加一
-//                Map<String, String> map = new HashMap<>();
-//                map.put("pictureId", entity.getImgID());
-//                String json = new Gson().toJson(map);
-//                try
-//                {
-//                    OkhttpUtils.post("picture/download_count", json, new Callback()
-//                    {
-//                        @Override
-//                        public void onFailure(@NotNull Call call, @NotNull IOException e)
-//                        {
-//                        }
-//
-//                        @Override
-//                        public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException
-//                        {
-//                        }
-//                    });
-//                } catch (IOException e)
-//                {
-//                    e.printStackTrace();
-//                }
-//
-//                //下载
-//                new Thread(() -> {
-//                    try
-//                    {
-//                        FutureTarget<File> target = Glide.with(context)
-//                                .asFile()
-//                                .load(entity.getDisplayImgUrl())
-//                                .submit();
-//                        final File imageFile = target.get();
-//                        String fileName = entity.getDisplayImgName() + "_" + entity.getDisplayImgUrl().substring(entity.getDisplayImgUrl().lastIndexOf('/')+1);
-//                        boolean saveSuccess = MyFileUtils.saveFile(imageFile, fileName);
-//                        //不能在子线程用toast
-////                        if (saveSuccess)
-////                        {
-////                            Log.e(TAG, "Save：图片保存成功");
-////                            Toast.makeText(context, "图片保存成功", Toast.LENGTH_SHORT).show();
-////                        }
-////                        else
-////                        {
-////                            Log.e(TAG, "Save：图片保存失败");
-////                            Toast.makeText(context, "图片保存失败", Toast.LENGTH_SHORT).show();
-////                        }
-//                    }
-//                    catch (Exception e)
-//                    {
-//                        e.printStackTrace();
-//                    }
-//                }).start();
-//                Toast.makeText(context, "图片正在保存~", Toast.LENGTH_SHORT).show();
-//            }
-//
-//        });
-
-        holder.discoverAuthorProfileImgView.setOnClickListener(new View.OnClickListener()
-        {
+        holder.tv_comment.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
-                int position = holder.getAdapterPosition();
-//                ImageEntity entity = discoverList.get(position);
-//                Toast.makeText(context, entity.getAuthorName(), Toast.LENGTH_SHORT).show();
+            public void onClick(View v) {
+                int pos = holder.getLayoutPosition();
+                onItemClickListener.onItemClick(holder.itemView,pos);
+            }
+        });
+        holder.iv_comment_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int pos = holder.getLayoutPosition();
+                onItemClickListener.onItemClick(holder.itemView,pos);
             }
         });
 
@@ -254,6 +176,8 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.ViewHo
         ImageView discoverAuthorProfileImgView;
         TextView discoverStarNumTextView;
         ImageView discoverLikeImgView;
+        ImageView iv_comment_img;
+        TextView tv_comment;
 
         public ViewHolder(View v)
         {
@@ -265,6 +189,8 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.ViewHo
             discoverAuthorProfileImgView = v.findViewById(R.id.iv_author);
             discoverStarNumTextView = v.findViewById(R.id.tv_like_num);
             discoverLikeImgView = v.findViewById(R.id.iv_like);
+            iv_comment_img = v.findViewById(R.id.iv_comment_img);
+            tv_comment = v.findViewById(R.id.tv_comment);
         }
     }
 

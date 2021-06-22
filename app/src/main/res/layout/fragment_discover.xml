@@ -57,7 +57,6 @@
             app:srlTextNothing=""
             app:srlFinishDuration="10"
             app:srlDrawableMarginRight="4dp"/>
-
         </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
             <android.support.design.widget.FloatingActionButton
