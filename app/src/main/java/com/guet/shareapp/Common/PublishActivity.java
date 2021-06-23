@@ -56,6 +56,8 @@ import okhttp3.Callback;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
+import static com.guet.shareapp.Fragment.TypeFragment.album_names;
+
 public class PublishActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE_CHOOSE = 100;
@@ -130,14 +132,14 @@ public class PublishActivity extends AppCompatActivity {
     }
 
     private void setSpinner() {
-        final String[] spinnerItems = {"风景","美食","人物","萌宠","其它"};
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, spinnerItems);
+
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, album_names.subList(0,album_names.size()-1));
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(spinnerAdapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                typeName.setText(spinnerItems[position]);
+                typeName.setText(album_names.get(position));
             }
 
             @Override
@@ -163,9 +165,7 @@ public class PublishActivity extends AppCompatActivity {
                 map.put("visible","false");
             }
             map.put("albumName",typeName.getText().toString());
-            if(!albumNames.contains(typeName.getText().toString())){
-                create_album(typeName.getText().toString());
-            }
+
             map.put("filename",editPicName.getText().toString());
             map.put("filepath",list.get(0));
             //正式上传
@@ -180,7 +180,7 @@ public class PublishActivity extends AppCompatActivity {
                     ResponseBody responseBody = response.body();
                     assert responseBody != null;
                     String json = responseBody.string();
-                    Log.e("lkh", json);
+//                    Log.e("lkh", json);
                     if(json.contains("413 Request Entity")){
                         ToastUtil.ShortToast("图片过大，无法上传");
                     }else{
@@ -188,6 +188,7 @@ public class PublishActivity extends AppCompatActivity {
                         if (responeObject.getCode() == 200){
                             Log.e("lkh","成功");
                             ToastUtil.ShortToast("上传成功");
+                            finish();
                         }else {
                             Log.e("lkh", "失败");
                             ToastUtil.ShortToast("上传失败");
@@ -197,29 +198,6 @@ public class PublishActivity extends AppCompatActivity {
                 }
             });
 
-        }
-    }
-
-    private void create_album(String name) {
-        HashMap<String,String> album_map = new HashMap<>();
-        album_map.put("username", LoginActivity.user_name);
-        album_map.put("albumName", name);
-        try {
-            OkHttpUtils.post("picture/create_album", album_map, new Callback()
-            {
-                @Override
-                public void onFailure(@NotNull Call call, @NotNull IOException e)
-                {
-
-                }
-                @Override
-                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException
-                {
-                    Log.d("lkh",response.toString());
-                }
-            });
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="10dp"
+        android:background="#eee"
+        android:id="@+id/view1"/>
+
+    <com.guet.shareapp.View.CircleImageView
+        android:id="@+id/iv_author"
+        android:layout_width="@dimen/circle_user_small_size"
+        android:layout_height="@dimen/circle_user_small_size"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/head"
+        />
+    <TextView
+        android:id="@+id/tv_name_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="username"
+        android:textColor="@color/black_80"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:layout_toRightOf="@+id/iv_author"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="25dp"/>
+
+    <TextView
+        android:id="@+id/tv_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="评论内容"
+        android:textColor="@color/black_80"
+
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:layout_toRightOf="@+id/iv_author"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/tv_name_item"/>
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="评论时间"
+        android:textColor="@color/black_80"
+        android:textSize="15sp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/tv_comment"/>
+
+
+</RelativeLayout>

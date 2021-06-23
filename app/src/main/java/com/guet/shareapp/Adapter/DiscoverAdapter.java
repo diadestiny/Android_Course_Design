@@ -15,7 +15,9 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.guet.shareapp.Common.CommentActivity;
 import com.guet.shareapp.Common.LoginActivity;
+import com.guet.shareapp.Common.SearchActivity;
 import com.guet.shareapp.Entity.ImageEntity;
 import com.guet.shareapp.Fragment.DiscoverFragment;
 import com.guet.shareapp.Interface.OnItemClickListener;
@@ -80,11 +82,10 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.ViewHo
         }else{
             holder.discoverLikeImgView.setImageResource(R.drawable.ic_like);
         }
-        Log.d("lkh",entity.getImgID()+" "+entity.getStared());
+//        Log.d("lkh",entity.getImgID()+" "+entity.getStared());
 
 
     }
-
 
     @NonNull
     @Override
@@ -153,6 +154,21 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.ViewHo
             public void onClick(View v) {
                 int pos = holder.getLayoutPosition();
                 onItemClickListener.onItemClick(holder.itemView,pos);
+            }
+        });
+
+        holder.discoverDisplayImgView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int pos = holder.getLayoutPosition();
+                Intent intent = new Intent(context, CommentActivity.class);
+                intent.putExtra("pic_id",discoverList.get(pos).getImgID());
+                intent.putExtra("img_url",discoverList.get(pos).getThumbnailUrl());
+                intent.putExtra("author_url",discoverList.get(pos).getAuthorProfileImgUrl());
+                intent.putExtra("tv_name_author",discoverList.get(pos).getAuthorName());
+                intent.putExtra("tv_name_img",discoverList.get(pos).getDisplayImgName());
+                intent.putExtra("star_num",discoverList.get(pos).getStarNum());
+                context.startActivity(intent);
             }
         });
 

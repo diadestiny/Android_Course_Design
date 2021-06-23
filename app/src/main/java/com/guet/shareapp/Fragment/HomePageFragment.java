@@ -54,12 +54,13 @@ public class HomePageFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         fragments.add(new DiscoverFragment());
         fragments.add(new TypeFragment());
-        fragments.add(new MessageFragment());
         fragments.add(new RecommendFragment());
         initViewPager();
         Glide.with(this)
                 .load("https://www.2020agc.site/user/show_avatar/"+LoginActivity.user_name)
                 .fitCenter()
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
                 .into(head);
         user_name.setText(LoginActivity.user_name);
         navigation_layout.setOnClickListener(new View.OnClickListener() {
@@ -91,8 +92,6 @@ public class HomePageFragment extends Fragment {
         Glide.with(getContext())
                 .load("https://www.2020agc.site/user/show_avatar/"+LoginActivity.user_name)
                 .fitCenter()
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .skipMemoryCache(true)
                 .into(head);
     }
 }

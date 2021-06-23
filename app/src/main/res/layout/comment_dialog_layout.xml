@@ -24,7 +24,7 @@
             android:layout_height="32dp"
             android:background="#D8D8D8"
             android:layout_marginBottom="14dp"
-            android:textColor="@android:color/white"
+            android:textColor="@android:color/holo_blue_dark"
             android:textSize="14sp"
             android:layout_marginTop="6dp"
             android:layout_alignParentRight="true"

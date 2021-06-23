@@ -6,14 +6,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.guet.shareapp.Fragment.DiscoverFragment;
-import com.guet.shareapp.Fragment.MessageFragment;
+
 import com.guet.shareapp.R;
 
 import java.util.List;
 
 public class HomePagerAdapter extends FragmentPagerAdapter {
 
-    private final String[] TITLES = {"发现","相册","关注","推荐"};
+    private final String[] TITLES = {"发现","相册","推荐"};
     private List<Fragment> fragments ;
     public HomePagerAdapter(FragmentManager fm,List<Fragment> list) {
         super(fm);

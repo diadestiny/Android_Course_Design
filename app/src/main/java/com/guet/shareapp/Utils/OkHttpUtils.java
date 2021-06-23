@@ -30,10 +30,8 @@ public  class OkHttpUtils {
     private static String token="";
 
     private static final String TAG = "OkhttpUtils";
-    /**
-     * 设置token
-     * @param newtoken 传进来的新的token
-     */
+
+
     public static void setToken(String newtoken) {
         token = newtoken;
     }
@@ -43,17 +41,12 @@ public  class OkHttpUtils {
     }
 
     //普通的get请求
-    public static void get(String url, Map<String,String> queryParams, Callback callback){
+    public static void get(String url, Callback callback){
         Request.Builder builder = new Request.Builder()
                 .url(OkHttpUtils.BASE_URL + url); //添加url
         Request request = builder.addHeader("token", OkHttpUtils.token).build();//携带token
         //构建一个参数的url
         final HttpUrl.Builder newBuilder = request.url().newBuilder();
-        if (queryParams != null) {
-            for (Map.Entry<String,String> entry:queryParams.entrySet()){
-                newBuilder.addQueryParameter(entry.getKey(),entry.getValue());
-            }
-        }
 
         //构建完成
         Request last_request = builder.url(newBuilder.build()).build();
@@ -135,15 +128,6 @@ public  class OkHttpUtils {
         okHttpClient.newCall(builder.build()).enqueue(callback);
     }
 
-    public static void my_post(String url,  Callback callback) throws IOException {
-        // 创建一个请求 Builder
-        FormBody.Builder builder = new FormBody.Builder();
-
-        RequestBody formBody = builder.build();
-        // 创建一个 request
-        Request request = new Request.Builder().url(url).post(formBody).build();
-        okHttpClient.newCall(request).enqueue(callback);
-    }
 
 
 }

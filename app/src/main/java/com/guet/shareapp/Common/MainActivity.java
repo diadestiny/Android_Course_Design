@@ -34,7 +34,6 @@ import com.guet.shareapp.View.CircleImageView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private HomePageFragment mHomePageFragment;
     NavigationView navigationView;
     DrawerLayout drawerLayout;
     CircleImageView mUserAvatarView;
@@ -68,10 +67,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void initFragments() {
-        mHomePageFragment = HomePageFragment.newInstance();
-        Fragment[] fragments = new Fragment[]{
-                mHomePageFragment
-        };
+        HomePageFragment mHomePageFragment = HomePageFragment.newInstance();
+
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.container, mHomePageFragment)

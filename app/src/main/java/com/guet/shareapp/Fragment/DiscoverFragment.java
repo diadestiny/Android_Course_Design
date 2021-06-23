@@ -225,7 +225,7 @@ public class DiscoverFragment extends Fragment {
                             @Override
                             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException
                             {
-                               ToastUtil.ShortToast(discoverList.get(pos).getImgID());
+                               ToastUtil.ShortToast("发布评论成功");
                             }
                         });
                     } catch (IOException e) {

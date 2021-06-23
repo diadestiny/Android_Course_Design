@@ -1,35 +1,108 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <EditText
-        android:id="@+id/dialog_comment_et"
-        android:layout_width="match_parent"
-        android:layout_height="105dp"
-        android:background="@drawable/comment_dialog_et_selector"
-        android:layout_margin="12dp"
-        android:hint="请输入评论内容..."
-        android:textSize="14sp"
-        android:gravity="left|top"
-        android:paddingLeft="15dp"
-        android:paddingTop="12dp"
-        android:textColorHint="#929292"
-        android:textColor="#808080"/>
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
     <RelativeLayout
+        android:id="@+id/first_relative"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <Button
-            android:id="@+id/dialog_comment_bt"
-            android:layout_width="72dp"
-            android:layout_height="32dp"
-            android:background="#D8D8D8"
-            android:layout_marginBottom="14dp"
-            android:textColor="@android:color/white"
-            android:textSize="14sp"
-            android:layout_marginTop="6dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="12dp"
-            android:text="发布"/>
+        android:layout_height="wrap_content"
+        android:layout_marginStart="7dp"
+        android:orientation="vertical">
+
+        <com.guet.shareapp.View.CircleImageView
+            android:id="@+id/iv_author"
+            android:layout_width="@dimen/circle_user_small_size"
+            android:layout_height="@dimen/circle_user_small_size"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/head"
+            app:border_color="@color/white"
+            app:border_width="@dimen/circle_default_width" />
+
+        <TextView
+            android:id="@+id/tv_name_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="username"
+            android:textColor="@color/black_80"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_toRightOf="@+id/iv_author"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"/>
+
+
+        <TextView
+            android:id="@+id/tv_name_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="标题"
+            android:textColor="@color/black_alpha_45"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_below="@+id/tv_name_item"
+            android:layout_marginLeft="10dp"
+            android:layout_centerHorizontal="true"/>
+
+        <ImageView
+            android:layout_width="300dp"
+            android:layout_height="200dp"
+            android:id="@+id/iv_img"
+            android:layout_below="@+id/tv_name_img"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"/>
+
+        <TextView
+            android:id="@+id/info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:textColor="@color/black_80"
+            android:layout_below="@+id/iv_img"
+            android:hint="图像描述"
+            android:layout_toRightOf="@+id/iv_author"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:layout_below="@+id/info"
+            android:hint="测试时间"
+            android:layout_toRightOf="@+id/iv_author"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"/>
+
     </RelativeLayout>
 
-</LinearLayout>
+    <View
+        android:id="@+id/view1"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_marginTop="10dp"
+        android:background="#eee"
+        android:layout_below="@+id/first_relative"/>
+
+    <TextView
+        android:id="@+id/ping_lun"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black_80"
+        android:text="评论列表"
+        android:layout_below="@+id/view1"
+        android:textSize="20sp"
+        android:layout_marginVertical="10dp"
+        android:layout_marginHorizontal="10dp"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ping_lun"/>
+
+</RelativeLayout>

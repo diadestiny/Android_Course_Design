@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.guet.shareapp.Interface.OnItemClickListener;
+import com.guet.shareapp.Interface.OnItemLongListener;
 import com.guet.shareapp.R;
 
 import java.util.ArrayList;
@@ -24,8 +25,8 @@ import java.util.List;
 public class TypeAdapter extends RecyclerView.Adapter<TypeAdapter.Type_ViewHolder> {
     Context context;
     OnItemClickListener onItemClickListener;
+    OnItemLongListener onItemLongListener;
     private List<String> list = new ArrayList<>();
-    HashMap<String, Integer> mp = new HashMap<>();
     private int[] itemIcons = new int[]{
             R.drawable.ic_category_live, R.drawable.ic_category_t13,
             R.drawable.ic_category_t1, R.drawable.ic_category_t3,
@@ -40,26 +41,14 @@ public class TypeAdapter extends RecyclerView.Adapter<TypeAdapter.Type_ViewHolde
     {
         this.context = context;
         this.list = list;
-//        mp.put("风景",R.drawable.ic_category_t59);
-//        mp.put("美食",R.drawable.ic_category_t59);
-//        list.add("风景");
-//        list.add("美食");
-//        list.add("人物");
-//        list.add("萌宠");
-//        list.add("动漫");
-//        list.add("图案");
-//        list.add("其它");
-        //"番剧", "动画",
-        // "音乐", "舞蹈", "游戏",
-        //  "科技", "生活", "鬼畜",
-        //   "时尚", "广告", "娱乐",
-        //  "电影", "电视剧", "游戏中心"
-        //"风景","美食","人物","萌宠","其它"
-
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
+    }
+
+    public void setOnItemLongListener(OnItemLongListener onItemLongListener) {
+        this.onItemLongListener = onItemLongListener;
     }
 
     public void setList(List<String> list) {
@@ -76,16 +65,27 @@ public class TypeAdapter extends RecyclerView.Adapter<TypeAdapter.Type_ViewHolde
 
     @Override
     public void onBindViewHolder(@NonNull Type_ViewHolder itemViewHolder, int i) {
+        if(i == list.size()-1){
+            itemViewHolder.mItemIcon.setImageResource(R.mipmap.ic_add);
+        }else{
             itemViewHolder.mItemIcon.setImageResource(itemIcons[i]);
-            itemViewHolder.mItemText.setText(list.get(i));
-            itemViewHolder.mItemIcon.setOnClickListener(new View.OnClickListener() {
+            itemViewHolder.mItemIcon.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    int pos = itemViewHolder.getLayoutPosition();
+                    onItemLongListener.onItemLongClick(itemViewHolder.itemView,pos);
+                    return true;
+                }
+            });
+        }
+        itemViewHolder.mItemText.setText(list.get(i));
+        itemViewHolder.mItemIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int pos = itemViewHolder.getLayoutPosition();
                 onItemClickListener.onItemClick(itemViewHolder.itemView,pos);
             }
         });
-
     }
 
 

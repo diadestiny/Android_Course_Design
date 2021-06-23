@@ -1,11 +1,14 @@
 package com.guet.shareapp.Fragment;
 
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -22,6 +25,7 @@ import com.guet.shareapp.Interface.OnItemClickListener;
 import com.guet.shareapp.Adapter.TypeAdapter;
 import com.guet.shareapp.Common.AlbumActivity;
 import com.guet.shareapp.Common.LoginActivity;
+import com.guet.shareapp.Interface.OnItemLongListener;
 import com.guet.shareapp.R;
 import com.guet.shareapp.Utils.OkHttpUtils;
 import com.guet.shareapp.Utils.ToastUtil;
@@ -47,7 +51,8 @@ public class TypeFragment extends Fragment implements Runnable{
     View view;
     RecyclerView recyclerView;
     TypeAdapter adapter;
-    List<String> album_names = new ArrayList<>();
+    public static List<String> album_names = new ArrayList<>();
+    final static int MAX_NUM = 15;
     public static List<Integer> album_picture_ids = new ArrayList<>();
 
 
@@ -58,8 +63,14 @@ public class TypeFragment extends Fragment implements Runnable{
             switch (msg.what){
                 case 0:
                     // 更新相册
+                    album_names.add("添加");
                     adapter.notifyDataSetChanged();
                     break;
+                case 1:
+                    // 删除相册
+                    adapter.notifyDataSetChanged();
+                    break;
+
             }
         }
     };
@@ -83,13 +94,80 @@ public class TypeFragment extends Fragment implements Runnable{
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                try {
-                    get_id(position);
-                } catch (IOException e) {
-                    e.printStackTrace();
+                if(position == album_names.size()-1){
+                    final EditText input = new EditText(getContext());
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setTitle("请输入新的相册名").setIcon(android.R.drawable.ic_dialog_info).setView(input)
+                            .setNegativeButton("取消", null);
+                    builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            create_album(input.getText().toString());
+                        }
+                    });
+                    builder.show();
+                }else{
+                    try {
+                        get_id(position);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+        });
+        adapter.setOnItemLongListener(new OnItemLongListener() {
+            @Override
+            public void onItemLongClick(View view, int position) {
+                if(position != album_names.size()-1){
+                    AlertDialog alertDialog2 = new AlertDialog.Builder(getContext())
+                            .setTitle("提示")
+                            .setMessage("是否删除该相册")
+                            .setIcon(R.drawable.logo)
+                            .setPositiveButton("确定", new DialogInterface.OnClickListener() {//添加"Yes"按钮
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    delete_album(position);
+                                }
+                            })
+                            .setNegativeButton("取消", new DialogInterface.OnClickListener() {//添加取消
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                }
+                            })
+                            .create();
+                    alertDialog2.show();
+
                 }
             }
         });
+    }
+
+    private void delete_album(int pos) {
+        HashMap<String,String> album_map = new HashMap<>();
+        album_map.put("username", LoginActivity.user_name);
+        album_map.put("albumName", album_names.get(pos));
+        try {
+            OkHttpUtils.post("picture/del_album", album_map, new Callback()
+            {
+                @Override
+                public void onFailure(@NotNull Call call, @NotNull IOException e)
+                {
+
+                }
+                @Override
+                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException
+                {
+                    album_names.remove(pos);
+                    Message  msg = new Message();
+                    msg.what = 1;
+                    handler.sendMessage(msg);
+
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void get_id(int pos) throws IOException {
@@ -153,6 +231,38 @@ public class TypeFragment extends Fragment implements Runnable{
                         msg.what = 0;
                         handler.sendMessage(msg);
                     }
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void create_album(String name) {
+        if(album_names.size()>=16){
+            ToastUtil.ShortToast("相册已达上限,创建失败");
+            return;
+        }
+        HashMap<String,String> album_map = new HashMap<>();
+        album_map.put("username", LoginActivity.user_name);
+        album_map.put("albumName", name);
+        try {
+            OkHttpUtils.post("picture/create_album", album_map, new Callback()
+            {
+                @Override
+                public void onFailure(@NotNull Call call, @NotNull IOException e)
+                {
+
+                }
+                @Override
+                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException
+                {
+                    album_names.remove(album_names.size()-1);
+                    album_names.add(name);
+                    Message  msg = new Message();
+                    msg.what = 0;
+                    handler.sendMessage(msg);
+
                 }
             });
         } catch (IOException e) {
