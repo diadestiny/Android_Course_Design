@@ -10,13 +10,11 @@
     <style name="BaseAppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@color/window_background</item>
     </style>
-    <style name="BlueButton">
-        <item name="colorButtonNormal">#63aeff</item>
-    </style>
+
     <style name="WhiteBox">
         <item name="colorControlNormal">@color/cardview_light_background</item>
         <item name="colorControlActivated">@color/cardview_dark_background</item>

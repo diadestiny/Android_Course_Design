@@ -106,12 +106,13 @@
             android:layout_height="33dp"
             android:layout_marginTop="25dp">
 
-<!--            <TextView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="忘记密码?"-->
-<!--                android:textColor="#00aaff"-->
-<!--                android:textSize="16sp" />-->
+            <TextView
+                android:id="@+id/tv_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="忘记密码?"
+                android:textColor="#00aaff"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/newuser"

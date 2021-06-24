@@ -55,7 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/default_general_margin"
-            android:text="@string/everyone_in_the_search"
+            android:text="大家都在搜"
             android:textColor="@color/black_alpha_45"
             android:textSize="@dimen/default_small_text_size" />
 
@@ -112,7 +112,7 @@
                 android:gravity="center"
                 android:paddingEnd="@dimen/default_tiny_padding"
                 android:paddingStart="@dimen/default_tiny_padding"
-                android:text="@string/look_more"
+                android:text="查看更多"
                 android:textColor="@color/font_normal"
                 android:textSize="@dimen/default_tiny_text_size" />
 

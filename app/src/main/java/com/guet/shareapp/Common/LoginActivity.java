@@ -47,6 +47,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private EditText password;
     private Button loginBtn;
     private TextView registerView;
+    private TextView find_passwordView;
     private CheckBox checkBox;
     private SharedPreferences sharedPreferences=null;
 
@@ -61,8 +62,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         username = findViewById(R.id.input_name);
         password = findViewById(R.id.input_password);
         checkBox = findViewById(R.id.check_box);
+        find_passwordView = findViewById(R.id.tv_password);
         loginBtn.setOnClickListener(this);
         registerView.setOnClickListener(this);
+        find_passwordView.setOnClickListener(this);
         initData();
 
     }
@@ -129,6 +132,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                break;
             case R.id.newuser:
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+                break;
+            case R.id.tv_password:
+                startActivity(new Intent(LoginActivity.this, FindPwActivity.class));
                 break;
         }
     }

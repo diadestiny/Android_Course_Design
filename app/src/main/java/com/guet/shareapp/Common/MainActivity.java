@@ -1,6 +1,8 @@
 package com.guet.shareapp.Common;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -18,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -26,6 +29,7 @@ import com.google.gson.reflect.TypeToken;
 import com.guet.shareapp.Fragment.HomePageFragment;
 import com.guet.shareapp.R;
 
+import com.guet.shareapp.Utils.ToastUtil;
 import com.guet.shareapp.View.CircleImageView;
 
 
@@ -79,13 +83,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         drawerLayout.closeDrawer(GravityCompat.START);
         switch (menuItem.getItemId()){
-            case R.id.item_group:
+            case R.id.item_chat:
                 // 悦享聊天
                 startActivity(new Intent(MainActivity.this, ChatActivity.class));
                 return true;
             case R.id.item_home:
                 startActivity(new Intent(MainActivity.this, MyInfoActivity.class));
                 return true;
+            case R.id.item_about:
+                AlertDialog salertDialog = new AlertDialog.Builder(this).setTitle("悦享开发者")
+                        .setMessage("1800300925林楷浩\n1800300909陈澳格\n1800301536谢文韬" )
+                        .setIcon(R.drawable.logo)
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                ToastUtil.ShortToast("感谢支持");
+                            }
+                        }).create();
+                salertDialog.show();
         }
         return false;
     }

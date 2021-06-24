@@ -49,7 +49,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginEnd="@dimen/default_general_margin"
                 android:background="@drawable/btn_pin_bg"
-                android:text="@string/download"
+                android:text="下载"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/default_small_text_size" />
 
