@@ -86,7 +86,7 @@ public class DiscoverFragment extends Fragment {
                     e.printStackTrace();
                 }
                 adapter.notifyDataSetChanged();
-                refreshlayout.finishRefresh(400/*,false*/);//传入false表示刷新失败
+                refreshlayout.finishRefresh(400);
             }
         });
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener()
@@ -99,7 +99,7 @@ public class DiscoverFragment extends Fragment {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                refreshlayout.finishLoadMore(400);//传入false表示加载失败
+                refreshlayout.finishLoadMore(400);
             }
         });
         recyclerView = view.findViewById(R.id.recycle);

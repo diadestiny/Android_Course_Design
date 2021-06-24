@@ -1,33 +1,24 @@
 package com.guet.shareapp.Common;
 
-import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.FutureTarget;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.guet.shareapp.Adapter.DiscoverAdapter;
 import com.guet.shareapp.Adapter.SearchAdapter;
-import com.guet.shareapp.Entity.ImageEntity;
 import com.guet.shareapp.R;
 import com.guet.shareapp.Utils.OkHttpUtils;
 import com.guet.shareapp.Utils.ToastUtil;
 import com.guet.shareapp.domain.ResponseObject;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
-import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -52,7 +43,7 @@ public class SearchActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_activiry);
+        setContentView(R.layout.activity_search);
         initView();
         str = getIntent().getStringExtra("search");
         try {

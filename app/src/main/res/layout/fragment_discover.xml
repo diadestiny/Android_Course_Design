@@ -7,7 +7,6 @@
     android:orientation="vertical">
 
     <RelativeLayout
-        android:id="@+id/rela"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -26,15 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:srlEnableLastTime="false"
-            app:srlFinishDuration="100"
-            app:srlTextPulling=""
-            app:srlTextLoading=""
-            app:srlTextRelease=""
-            app:srlTextFinish=""
-            app:srlTextFailed=""
-            app:srlTextUpdate=""
-            app:srlTextSecondary=""
-            app:srlTextRefreshing=""/>
+            app:srlFinishDuration="100" />
 
 
         <android.support.v7.widget.RecyclerView
@@ -52,9 +43,6 @@
             android:layout_height="wrap_content"
             app:srlTextLoading="加载中..."
             app:srlTextRefreshing="加载中..."
-            app:srlTextFinish=""
-            app:srlTextFailed=""
-            app:srlTextNothing=""
             app:srlFinishDuration="10"
             app:srlDrawableMarginRight="4dp"/>
         </com.scwang.smart.refresh.layout.SmartRefreshLayout>

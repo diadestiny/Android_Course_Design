@@ -239,7 +239,7 @@ public class TypeFragment extends Fragment implements Runnable{
     }
 
     private void create_album(String name) {
-        if(album_names.size()>=16){
+        if(album_names.size()>MAX_NUM){
             ToastUtil.ShortToast("相册已达上限,创建失败");
             return;
         }

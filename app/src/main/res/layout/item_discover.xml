@@ -110,31 +110,32 @@
                 android:maxLength="9"
                 android:text="评论"
                 android:textSize="13sp"
-                android:layout_toLeftOf="@id/tv_share"
+                android:layout_toLeftOf="@id/tv_download"
                 android:layout_marginEnd="25dp"
                 android:layout_marginStart="3dp"
                 android:layout_centerInParent="true"
                 android:layout_centerHorizontal="true"/>
 
             <ImageView
+                android:id="@+id/iv_download"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:src="@drawable/ic_share"
+                android:src="@drawable/ic_download"
                 android:layout_centerInParent="true"
-                android:layout_toStartOf="@+id/tv_share"
+                android:layout_toStartOf="@+id/tv_download"
                 android:layout_marginBottom="5dp"/>
 
             <TextView
-                android:id="@+id/tv_share"
+                android:id="@+id/tv_download"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxLength="9"
-                android:text="转发"
+                android:text="下载"
                 android:textSize="13sp"
                 android:layout_gravity="center"
                 android:layout_alignParentEnd="true"
                 android:layout_centerInParent="true"
-                android:layout_marginStart="3dp"/>
+                android:layout_marginRight="5dp"/>
 
         </RelativeLayout>
 

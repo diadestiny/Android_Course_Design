@@ -39,6 +39,8 @@ import okhttp3.Callback;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
+import static com.guet.shareapp.Utils.Download.savePicture;
+
 public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.ViewHolder>{
 
     private List<ImageEntity> discoverList;
@@ -172,6 +174,23 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.ViewHo
             }
         });
 
+        holder.tv_download.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int pos = holder.getLayoutPosition();
+                savePicture(discoverList.get(pos).getDisplayImgName()+".jpg",discoverList.get(pos).getThumbnailUrl(),context);
+            }
+        });
+
+        holder.iv_download.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int pos = holder.getLayoutPosition();
+                savePicture(discoverList.get(pos).getDisplayImgName()+".jpg",discoverList.get(pos).getThumbnailUrl(),context);
+            }
+        });
+
+
 
         return holder;
     }
@@ -194,6 +213,8 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.ViewHo
         ImageView discoverLikeImgView;
         ImageView iv_comment_img;
         TextView tv_comment;
+        TextView tv_download;
+        ImageView iv_download;
 
         public ViewHolder(View v)
         {
@@ -207,6 +228,8 @@ public class DiscoverAdapter extends RecyclerView.Adapter<DiscoverAdapter.ViewHo
             discoverLikeImgView = v.findViewById(R.id.iv_like);
             iv_comment_img = v.findViewById(R.id.iv_comment_img);
             tv_comment = v.findViewById(R.id.tv_comment);
+            tv_download = v.findViewById(R.id.tv_download);
+            iv_download = v.findViewById(R.id.iv_download);
         }
     }
 

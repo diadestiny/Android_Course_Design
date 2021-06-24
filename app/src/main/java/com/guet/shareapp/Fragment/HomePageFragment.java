@@ -34,7 +34,7 @@ public class HomePageFragment extends Fragment {
     TextView user_name;
     ImageView head;
     private List<Fragment> fragments = new ArrayList<>();
-
+    private int refresh_num = 0;
     public HomePageFragment() { }
 
     @Override
@@ -89,9 +89,14 @@ public class HomePageFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Glide.with(getContext())
-                .load("https://www.2020agc.site/user/show_avatar/"+LoginActivity.user_name)
-                .fitCenter()
-                .into(head);
+        if(refresh_num<=3){
+            Glide.with(getContext())
+                    .load("https://www.2020agc.site/user/show_avatar/"+LoginActivity.user_name)
+                    .fitCenter()
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true)
+                    .into(head);
+        }
+        refresh_num++;
     }
 }

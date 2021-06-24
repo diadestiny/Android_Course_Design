@@ -13,10 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.guet.shareapp.Common.RankActivity;
 import com.guet.shareapp.Common.SearchActivity;
 import com.guet.shareapp.Entity.HotTag;
 import com.guet.shareapp.Interface.SearchService;
@@ -51,6 +53,7 @@ public class RecommendFragment extends Fragment {
     TagFlowLayout mHideTagLayout,mTagFlowLayout;
     TextView mMoreText;
     NestedScrollView mScrollView;
+    RelativeLayout rank1,rank2;
     private boolean isShowMore = true;
     private List<HotTag.ListBean> hotSearchTags = new ArrayList<>();
     @Override
@@ -112,6 +115,26 @@ public class RecommendFragment extends Fragment {
                startActivity(intent);
             }
         });
+        rank1 = view.findViewById(R.id.rank1);
+        rank1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), RankActivity.class);
+                intent.putExtra("rank","douban");
+                startActivity(intent);
+            }
+        });
+
+        rank2 = view.findViewById(R.id.rank2);
+        rank2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), RankActivity.class);
+                intent.putExtra("rank","wallpaper");
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void initTagLayout() {
