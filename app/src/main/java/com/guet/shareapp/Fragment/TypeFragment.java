@@ -115,30 +115,27 @@ public class TypeFragment extends Fragment implements Runnable{
 
             }
         });
-        adapter.setOnItemLongListener(new OnItemLongListener() {
-            @Override
-            public void onItemLongClick(View view, int position) {
-                if(position != album_names.size()-1){
-                    AlertDialog alertDialog2 = new AlertDialog.Builder(getContext())
-                            .setTitle("提示")
-                            .setMessage("是否删除该相册")
-                            .setIcon(R.drawable.logo)
-                            .setPositiveButton("确定", new DialogInterface.OnClickListener() {//添加"Yes"按钮
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    delete_album(position);
-                                }
-                            })
-                            .setNegativeButton("取消", new DialogInterface.OnClickListener() {//添加取消
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
+        adapter.setOnItemLongListener((view, position) -> {
+            if(position != album_names.size()-1){
+                AlertDialog alertDialog2 = new AlertDialog.Builder(getContext())
+                        .setTitle("提示")
+                        .setMessage("是否删除该相册")
+                        .setIcon(R.drawable.logo)
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {//添加"Yes"按钮
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                delete_album(position);
+                            }
+                        })
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {//添加取消
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
 
-                                }
-                            })
-                            .create();
-                    alertDialog2.show();
+                            }
+                        })
+                        .create();
+                alertDialog2.show();
 
-                }
             }
         });
     }

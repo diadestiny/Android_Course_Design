@@ -29,13 +29,13 @@ public class TypeAdapter extends RecyclerView.Adapter<TypeAdapter.Type_ViewHolde
     private List<String> list = new ArrayList<>();
     private int[] itemIcons = new int[]{
             R.drawable.ic_category_live, R.drawable.ic_category_t13,
-            R.drawable.ic_category_t1, R.drawable.ic_category_t3,
-            R.drawable.ic_category_t129, R.drawable.ic_category_t4,
-            R.drawable.ic_category_t36, R.drawable.ic_category_t160,
-            R.drawable.ic_category_t119, R.drawable.ic_category_t155,
-            R.drawable.ic_category_t165, R.drawable.ic_category_t5,
-            R.drawable.ic_category_t23, R.drawable.ic_category_t11,
-            R.drawable.ic_category_game_center
+            R.drawable.ic_category_t3, R.drawable.ic_category_t129,
+            R.drawable.ic_category_t4, R.drawable.ic_category_t36,
+            R.drawable.ic_category_t160, R.drawable.ic_category_t119,
+            R.drawable.ic_category_t155, R.drawable.ic_category_t165,
+            R.drawable.ic_category_t5, R.drawable.ic_category_t23,
+            R.drawable.ic_category_t11, R.drawable.ic_category_game_center,
+            R.drawable.ic_category_t26,
     };
     public TypeAdapter(Context context,List<String> list)
     {
