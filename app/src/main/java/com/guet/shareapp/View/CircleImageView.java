@@ -27,7 +27,7 @@ import com.guet.shareapp.R;
  * 圆形头像
  */
 public class CircleImageView extends android.support.v7.widget.AppCompatImageView {
-    private static final ScaleType SCALE_TYPE = ScaleType.CENTER_CROP;
+    private static final ImageView.ScaleType SCALE_TYPE = ImageView.ScaleType.CENTER_CROP;
     private static final Bitmap.Config BITMAP_CONFIG = Bitmap.Config.ARGB_8888;
     private static final int COLORDRAWABLE_DIMENSION = 2;
     private static final int DEFAULT_BORDER_WIDTH = 0;

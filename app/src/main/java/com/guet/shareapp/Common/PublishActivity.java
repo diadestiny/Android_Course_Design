@@ -239,7 +239,7 @@ public class PublishActivity extends AppCompatActivity {
                 .capture(true)//选择照片时，是否显示拍照
                 .captureStrategy(new CaptureStrategy(true, "com.guet.shareapp.fileprovider"))//参数1 true表示拍照存储在共有目录，false表示存储在私有目录；参数2与 AndroidManifest中authorities值相同，用于适配7.0系统 必须设置
                 .imageEngine(new GlideEngine())//图片加载引擎
-                .forResult(REQUEST_CODE_CHOOSE);//
+                .forResult(REQUEST_CODE_CHOOSE);
     }
 
     @Override

@@ -19,7 +19,7 @@ import java.util.List;
 
 
 /**
- * 首页分区adapter
+ * 首页相册adapter
  */
 
 public class TypeAdapter extends RecyclerView.Adapter<TypeAdapter.Type_ViewHolder> {
