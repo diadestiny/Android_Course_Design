@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
     private void initNavigationView() {
+        
         navigationView.setNavigationItemSelectedListener(this);
         View headerView = navigationView.getHeaderView(0);
         mUserAvatarView = (CircleImageView) headerView.findViewById(R.id.user_avatar_view);
